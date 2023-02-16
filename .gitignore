@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+.env/
+.Env/
+configuration.py
+config.py
+conf.py
+configuration.ini
+config.ini
+conf.ini
+configuration.txt
+config.txt
+conf.txt
