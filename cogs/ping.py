@@ -8,7 +8,7 @@ class Ping(Cog):
     def __del__(self):
         ...
 
-    @slash_command(name="ping", description="A simple ping command.")
+    @slash_command(name="zing", description="A simple ping command.")
     async def ping(self, inter) -> None:
         await inter.respond(f"Pong! {self.bot.latency * 1000:.2f}ms")
 
