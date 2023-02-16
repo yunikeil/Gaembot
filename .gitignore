@@ -157,3 +157,5 @@ cython_debug/
 # Project secret files
 configuration.py
 
+# Test files
+.test.py
