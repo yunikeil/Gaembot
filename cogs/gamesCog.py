@@ -13,7 +13,7 @@ class GamesCog(Cog):
         ...
 
     games = discord.SlashCommandGroup(name="games",
-                                          description="Games group commnd!",
+                                          description="Games group comand!",
                                           guild_ids=[1075733298371899433])
 
         
