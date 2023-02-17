@@ -53,7 +53,8 @@ async def select_channel(
     "attachment",
     discord.Attachment,
     description="A file to attach to the message",
-    required=False,  # The default value will be None if the user doesn't provide a file.
+    # The default value will be None if the user doesn't provide a file.
+    required=False,
 )
 async def say(
     ctx: discord.ApplicationContext,

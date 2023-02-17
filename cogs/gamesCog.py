@@ -1,4 +1,5 @@
 import discord
+from discord.commands import SlashCommandGroup
 from discord.ext import commands
 from discord.ext.commands import Bot, Cog, slash_command
 
@@ -12,20 +13,24 @@ class GamesCog(Cog):
     def __del__(self):
         ...
 
-    games = discord.SlashCommandGroup(name="games",
-                                          description="Games group comand!",
-                                          guild_ids=[1075733298371899433])
+    games = SlashCommandGroup(
+        name="games",
+        description="Games group command!",
+        guild_ids=[1075733298371899433])
 
-        
+    @games.command()  # Create a slash command under the math group
+    @discord.option("size", description="Enter your size of game", choices=["4x4 game", "5x5 game", "6x6 game"])
+    async def game(self, ctx: discord.ApplicationContext):
+        await ctx.respond("123")
 
-    @commands.Cog.listener()
+    @Cog.listener()
     async def on_application_command_error(
         self, ctx: discord.ApplicationContext, error: discord.DiscordException
     ):
         if isinstance(error, commands.NotOwner):
             await ctx.respond("You can't use that command!")
         else:
-            await ctx.respond(f"```\n{error}\n```")
+            raise error
 
 
 def setup(bot: Bot) -> None:

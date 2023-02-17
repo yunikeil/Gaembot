@@ -13,8 +13,9 @@ import configuration
 class Bot(commands.Bot, ABC):
     def __init__(self, **options):
         super().__init__(command_prefix='>',
-                         heыlp_command=None,
+                         help_command=None,
                          intents=discord.Intents.all(),
+                         debug_guilds=[1075733298371899433],
                          **options)
 
         self.DATA: dict = {
@@ -23,7 +24,7 @@ class Bot(commands.Bot, ABC):
         self.OWNERS: list[int] = []
         self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
-    
+
     async def on_ready(self):
         if not self.DATA['bot-started']:
             application_info = await self.application_info()
