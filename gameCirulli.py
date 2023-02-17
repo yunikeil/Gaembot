@@ -39,11 +39,11 @@ class GameCirulli:
         Используется внутри класса
         Генерация рандомных точек в матрице
         Нет входных значений, кроме самого объекта (self)
-        Ничего не возвращает (меняет self.data)
+        Возвращает фолс если генерация невозможна, тру если всё ок, меняет self.data)
         """
         # Тут код
         
-
+        return 
         ...
 
     def move_right(self):
@@ -54,7 +54,9 @@ class GameCirulli:
         Возвращает результат выполнения drow_matrix
         """
 
-        return self.drow_matrix()
+        if self.generate_points():
+            return self.drow_matrix()
+        else: return False
 
     def move_left(self):
         """
@@ -64,7 +66,9 @@ class GameCirulli:
         Возвращает результат выполнения drow_matrix
         """
 
-        return self.drow_matrix()
+        if self.generate_points():
+            return self.drow_matrix()
+        else: return False
 
     def move_up(self):
         """
@@ -74,7 +78,9 @@ class GameCirulli:
         Возвращает результат выполнения drow_matrix
         """
 
-        return self.drow_matrix()
+        if self.generate_points():
+            return self.drow_matrix()
+        else: return False
 
     def move_down(self):
         """
@@ -84,7 +90,9 @@ class GameCirulli:
         Возвращает результат выполнения drow_matrix
         """
 
-        return self.drow_matrix()
+        if self.generate_points():
+            return self.drow_matrix()
+        else: return False
     ...
 
 game = GameCirulli(4)
