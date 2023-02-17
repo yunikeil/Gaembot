@@ -1,5 +1,7 @@
-import discord
-from discord.ext import commands
+from abc import ABC
+
+import nextcord
+from nextcord.ext import commands
 
 import asyncio
 from traceback import format_exception
@@ -8,30 +10,30 @@ import aeval
 import configuration
 
 
-class Bot(commands.Bot):
+class Bot(commands.Bot, ABC):
     def __init__(self, **options):
         super().__init__(command_prefix='>',
                          help_command=None,
-                         intents=discord.Intents.all(),
+                         intents=nextcord.Intents.all(),
                          **options)
 
         self.DATA: dict = {
             'bot-started': False,
         }
         self.OWNERS: list[int] = []
-        self.EVALOWNER: list[int] = []
+        self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
-    
+
     async def on_ready(self):
-        if self.DATA['bot-started'] == False:
+        if not self.DATA['bot-started']:
             application_info = await self.application_info()
             self.OWNERS.append(application_info.owner.id)
-            self.EVALOWNER.append(application_info.owner.id)
+            self.EVAL_OWNER.append(application_info.owner.id)
             self.DATA['bot-started'] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
 
     async def on_command_error(self, ctx, error):
-        if isinstance(error, discord.ext.commands.CommandNotFound):
+        if isinstance(error, nextcord.ext.commands.CommandNotFound):
             return
         raise error
 
@@ -81,10 +83,10 @@ async def cog_reload(ctx: commands.Context, cog: str):
 
 @bot.command()
 async def eval(ctx, *, content):
-    if ctx.author.id not in bot.EVALOWNER:
+    if ctx.author.id not in bot.EVAL_OWNER:
         return
     standart_args = {
-        "discord": discord,
+        "nextcord": nextcord,
         "commands": commands,
         "bot": bot,
         "ctx": ctx,
@@ -99,7 +101,7 @@ async def eval(ctx, *, content):
 
 
 if __name__ == "__main__":
-    cogs_add_on_start: list[str] = ["ping"]
+    cogs_add_on_start: list[str] = ["gamesCog"]
     if cogs_add_on_start:
         [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_start]
     bot.run(bot.config.token_dis)
