@@ -12,6 +12,7 @@ class Ping(Cog):
     async def ping(self, inter) -> None:
         await inter.respond(f"Pong! {self.bot.latency * 1000:.2f}ms")
 
+
 def setup(bot: Bot) -> None:
     print("ping.py loaded")
     bot.add_cog(Ping(bot))

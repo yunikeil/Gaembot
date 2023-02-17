@@ -1,3 +1,5 @@
+from abc import ABC
+
 import discord
 from discord.ext import commands
 
@@ -8,10 +10,10 @@ import aeval
 import configuration
 
 
-class Bot(commands.Bot):
+class Bot(commands.Bot, ABC):
     def __init__(self, **options):
         super().__init__(command_prefix='>',
-                         help_command=None,
+                         heыlp_command=None,
                          intents=discord.Intents.all(),
                          **options)
 
@@ -19,14 +21,14 @@ class Bot(commands.Bot):
             'bot-started': False,
         }
         self.OWNERS: list[int] = []
-        self.EVALOWNER: list[int] = []
+        self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
     
     async def on_ready(self):
-        if self.DATA['bot-started'] == False:
+        if not self.DATA['bot-started']:
             application_info = await self.application_info()
             self.OWNERS.append(application_info.owner.id)
-            self.EVALOWNER.append(application_info.owner.id)
+            self.EVAL_OWNER.append(application_info.owner.id)
             self.DATA['bot-started'] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
 
@@ -81,7 +83,7 @@ async def cog_reload(ctx: commands.Context, cog: str):
 
 @bot.command()
 async def eval(ctx, *, content):
-    if ctx.author.id not in bot.EVALOWNER:
+    if ctx.author.id not in bot.EVAL_OWNER:
         return
     standart_args = {
         "discord": discord,
@@ -99,7 +101,7 @@ async def eval(ctx, *, content):
 
 
 if __name__ == "__main__":
-    cogs_add_on_start: list[str] = ["ping"]
+    cogs_add_on_start: list[str] = ["gamesCog"]
     if cogs_add_on_start:
         [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_start]
     bot.run(bot.config.token_dis)

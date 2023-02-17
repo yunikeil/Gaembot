@@ -1,4 +1,3 @@
-from enum import Enum
 
 
 class GameCirulli:
@@ -94,6 +93,3 @@ class GameCirulli:
             return self.drow_matrix()
         else: return False
     ...
-
-game = GameCirulli(4)
-print(game.data)
