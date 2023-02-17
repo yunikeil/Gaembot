@@ -1,7 +1,7 @@
 from abc import ABC
 
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 import asyncio
 from traceback import format_exception
@@ -14,8 +14,7 @@ class Bot(commands.Bot, ABC):
     def __init__(self, **options):
         super().__init__(command_prefix='>',
                          help_command=None,
-                         intents=discord.Intents.all(),
-                         debug_guilds=[1075733298371899433],
+                         intents=nextcord.Intents.all(),
                          **options)
 
         self.DATA: dict = {
@@ -34,7 +33,7 @@ class Bot(commands.Bot, ABC):
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
 
     async def on_command_error(self, ctx, error):
-        if isinstance(error, discord.ext.commands.CommandNotFound):
+        if isinstance(error, nextcord.ext.commands.CommandNotFound):
             return
         raise error
 
@@ -87,7 +86,7 @@ async def eval(ctx, *, content):
     if ctx.author.id not in bot.EVAL_OWNER:
         return
     standart_args = {
-        "discord": discord,
+        "nextcord": nextcord,
         "commands": commands,
         "bot": bot,
         "ctx": ctx,

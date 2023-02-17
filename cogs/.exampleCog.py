@@ -1,4 +1,4 @@
-from discord.ext.commands import Bot, Cog, slash_command
+from nextcord.ext.commands import Bot, Cog, slash_command
 
 
 class Ping(Cog):

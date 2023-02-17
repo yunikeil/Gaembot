@@ -1,7 +1,5 @@
-import discord
-from discord.commands import SlashCommandGroup
-from discord.ext import commands
-from discord.ext.commands import Bot, Cog, slash_command
+import nextcord
+from nextcord.ext.commands import Bot, Cog
 
 from gameCirulli import GameCirulli
 
@@ -13,25 +11,10 @@ class GamesCog(Cog):
     def __del__(self):
         ...
 
-    games = SlashCommandGroup(
-        name="games",
-        description="Games group command!",
-        guild_ids=[1075733298371899433])
-
-    @games.command()  # Create a slash command under the math group
-    @discord.option("size", description="Enter your size of game", choices=["4x4 game", "5x5 game", "6x6 game"])
-    async def game(self, ctx: discord.ApplicationContext):
-        await ctx.respond("123")
-
-    @Cog.listener()
-    async def on_application_command_error(
-        self, ctx: discord.ApplicationContext, error: discord.DiscordException
-    ):
-        if isinstance(error, commands.NotOwner):
-            await ctx.respond("You can't use that command!")
-        else:
-            raise error
-
+    @nextcord.slash_command(name="ping", description="A simple ping command.", guild_ids=[1075733298371899433])
+    async def ping(self, interaction: nextcord.Interaction):
+        await interaction.response.send_message(f"Pong! {self.bot.latency * 1000:.2f}ms")
+ 
 
 def setup(bot: Bot) -> None:
     print("gamesGog.py loaded")
