@@ -4,7 +4,7 @@ from nextcord.ext.commands import Cog
 
 from main import Bot
 from configuration import test_guilds
-from gameCirulli import GameCirulli
+from games import gameCirulli, ticTacToe
 
 
 class GamesCog(Cog):
@@ -25,14 +25,17 @@ class GamesCog(Cog):
         game_name: str = SlashOption(
             name="game",
             description="The game you want",
-            choices=["2048", "Checkers", "Просто русский варинт.."]
+            choices=["2048", "Checkers", "Tic Tac Toe", "Просто русский варинт.."]
         ),
     ):
 
         """
-        Тут будет отправка сообщений о настройках игры...
+        Тут будет отправка сообщений о настройках игры и общая логика сообщений дискорда
         """
-        await interaction.response.send_message(f"This is {game_name}!")
+        if game_name == "Tic Tac Toe":
+            await interaction.response.send_message(f"Tic Tac Toe: X goes first", view=ticTacToe.TicTacToe())
+        else:
+            await interaction.response.send_message(f"This is {game_name}!")
 
 
 def setup(bot: Bot) -> None:
