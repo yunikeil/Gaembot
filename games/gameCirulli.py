@@ -27,7 +27,6 @@ class GameCirulli:
         else:
             self.data[(position1 - 1) // size][position1 % 4 - 1] = 2
             self.data[(position2 - 1) // size][position2 % 4 - 1] = 4
-        ...
 
     def __del__(self):
         """
@@ -54,8 +53,10 @@ class GameCirulli:
         # Созданем линии холста
         idraw.rectangle((0, 0, size, size * 100), fill='gray')  # левая граница
         idraw.rectangle((size*100-size, 0, size*100, size*100), fill='gray')  # Правая граница
-        idraw.rectangle((0, 0, size*100, size), fill='gray')  # отступ слева, отступ сверху, размер, размер
-        idraw.rectangle((0, size*100-size, size*100, size*100), fill='gray')  # отступ слева, отступ сверху, размер, размер
+        # отступ слева, отступ сверху, размер, размер
+        idraw.rectangle((0, 0, size*100, size), fill='gray')
+        # отступ слева, отступ сверху, размер, размер
+        idraw.rectangle((0, size*100-size, size*100, size*100), fill='gray')
 
         img.save('GamePicture.png')
         img.show()
@@ -94,21 +95,29 @@ class GameCirulli:
         result = False
         for i in range(1, self.size-1):
             for j in range(1, self.size-1):
-                if self.data[i][j] == self.data[i][j-1] or self.data[i][j] == self.data[i-1][j] or self.data[i][j] == self.data[i][j+1] or self.data[i][j] == self.data[i+1][j]:
+                if self.data[i][j] == self.data[i][j-1] or \
+                        self.data[i][j] == self.data[i-1][j] or \
+                        self.data[i][j] == self.data[i][j+1] or \
+                        self.data[i][j] == self.data[i+1][j]:
                     result = True
                     break
             if result:
                 break
         if not result:
             for i in range(1, self.size-1):
-                if self.data[0][i] == self.data[0][i-1] or self.data[0][i] == self.data[0][i+1] or self.data[self.size-1][i] == self.data[self.size-1][i-1] or self.data[self.size-1][i] == self.data[self.size-1][i+1]:
+                if self.data[0][i] == self.data[0][i-1] or \
+                        self.data[0][i] == self.data[0][i+1] or \
+                        self.data[self.size-1][i] == self.data[self.size-1][i-1] or \
+                        self.data[self.size-1][i] == self.data[self.size-1][i+1]:
                     result = True
                     break
-                if self.data[i][0] == self.data[i-1][0] or self.data[i][0] == self.data[i+1][0] or self.data[i][self.size-1] == self.data[i-1][self.size-1] or self.data[i][self.size-1] == self.data[i+1][self.size-1]:
+                if self.data[i][0] == self.data[i-1][0] or \
+                        self.data[i][0] == self.data[i+1][0] or \
+                        self.data[i][self.size-1] == self.data[i-1][self.size-1] or \
+                        self.data[i][self.size-1] == self.data[i+1][self.size-1]:
                     result = True
                     break
         return result
-        ...
 
     def move_right(self):
         """
@@ -241,4 +250,3 @@ class GameCirulli:
             return self.drow_matrix()
         else:
             return False
-    ...
