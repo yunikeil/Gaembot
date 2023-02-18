@@ -1,4 +1,14 @@
+import nextcord
+
 from random import randint
+
+
+class GameCirulliButton(nextcord.ui.Button["GameCirulli"]):
+    """
+    нужен конструктор ембедов, тут будет логика кнопок
+    ембедс скорее всего суну в основной класс игры
+    """
+    ...
 
 
 class GameCirulli:
@@ -9,7 +19,6 @@ class GameCirulli:
         Также тут объявляются все глобальные для класса поля,
          которые будут использоваться в последующих методах.
         """
-        # Переменная data отвечает за хранение информации.
         self.data: list[list[int]] = [
             [0 for x in range(size)] for y in range(size)
         ]

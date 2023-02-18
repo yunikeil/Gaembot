@@ -4,7 +4,8 @@ from nextcord.ext.commands import Cog
 
 from main import Bot
 from configuration import test_guilds
-from games import gameCirulli, ticTacToe
+from games.ticTacToe import TicTacToe
+from games.gameCirulli import GameCirulli
 
 
 class GamesCog(Cog):
@@ -22,18 +23,19 @@ class GamesCog(Cog):
     async def cirulli_game(
         self,
         interaction: Interaction,
-        game_name: str = SlashOption(
+        game_name: int = SlashOption(
             name="game",
             description="The game you want",
-            choices=["2048", "Checkers", "Tic Tac Toe", "Просто русский варинт.."]
+            choices={"2048": 1, "Checkers": 2, "Tic Tac Toe": 3}
         ),
     ):
 
         """
         Тут будет отправка сообщений о настройках игры и общая логика сообщений дискорда
         """
-        if game_name == "Tic Tac Toe":
-            await interaction.response.send_message(f"Tic Tac Toe: X goes first", view=ticTacToe.TicTacToe())
+
+        if game_name == 3:
+            await interaction.response.send_message(f"Tic Tac Toe: X goes first", view=TicTacToe())
         else:
             await interaction.response.send_message(f"This is {game_name}!")
 
