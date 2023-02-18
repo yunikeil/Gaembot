@@ -1,3 +1,22 @@
-## Gaembot
-https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
-A bot created within the framework of a subject for the study of teamwork
+# Gaembot
+
+## A bot created within the framework of a subject for the study of teamwork
+
+Installing
+----------
+
+```shell
+> python -m venv Venv 
+> pip install -r requrements.txt
+> python .\main.py
+```
+
+Resources:
+----------
+
+- https://github.com/nextcord/nextcord
+- https://docs.nextcord.dev/en/stable/ext/commands/api.html#cogs
+- https://discord.com/developers/docs/
+- https://discord.com/developers/applications
+- https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
+
