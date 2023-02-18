@@ -159,3 +159,4 @@ configuration.py
 
 # Test files
 .test.py
+test.py
