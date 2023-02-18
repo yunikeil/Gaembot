@@ -30,7 +30,20 @@ class GameCirulli:
         Возвращает объект картинки.
         """
         # Тут код
+        size = 4
 
+        # Создаем холст
+        img = Image.new('RGBA', (size * 100, size * 100), 'beige')  # холст
+        idraw = ImageDraw.Draw(img)
+
+        # Созданем линии холста
+        idraw.rectangle((0, 0, size, size * 100), fill='gray')  # левая граница
+        idraw.rectangle((size*100-size, 0, size*100, size*100), fill='gray')  # Правая граница
+        idraw.rectangle((0, 0, size*100, size), fill='gray')  # отступ слева, отступ сверху, размер, размер
+        idraw.rectangle((0, size*100-size, size*100, size*100), fill='gray')  # отступ слева, отступ сверху, размер, размер
+
+        img.save('GamePicture.png')
+        img.show()
         return print("image")
 
     def generate_points(self):
