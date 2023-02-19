@@ -26,7 +26,7 @@ class GamesCog(Cog):
         game_name: str = SlashOption(
             name="game",
             description="The game you want",
-            choices=["2048", "Checkers", "Tic Tac Toe"]
+            choices=["2048", "Tic Tac Toe", "Checkers"]
         ),
     ):
 
@@ -37,7 +37,7 @@ class GamesCog(Cog):
             game = GameCirulli(5)
             data = '\n'.join('\t'.join(map(str, row)) for row in game.data)
             await interaction.response.send_message(f"2048\n{data}", view=GameCirulliView(game))
-        elif game_name == "Checkers":
+        elif game_name == "Tic Tac Toe":
             await interaction.response.send_message(f"Tic Tac Toe: X goes first", view=TicTacToe())
         else:
             """
