@@ -34,7 +34,7 @@ class GamesCog(Cog):
         Тут будет отправка сообщений о настройках игры и подключение новых кнопок (от классов игры)
         """
         if game_name == "2048":
-            game = GameCirulli(5)
+            game = GameCirulli(4)
             data = '\n'.join('\t'.join(map(str, row)) for row in game.data)
             await interaction.response.send_message(f"2048\n{data}", view=GameCirulliView(game))
         elif game_name == "Tic Tac Toe":
