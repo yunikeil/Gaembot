@@ -158,6 +158,8 @@ cython_debug/
 
 # Linux systems
 nohup.out
+gaembot.txt
+start.txt
 
 # Project secret files
 configuration.py
