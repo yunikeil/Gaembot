@@ -11,6 +11,14 @@ Installing
 > python .\main.py
 ```
 
+Configuration file
+------------------
+
+```python
+test_guilds: list[int] = []
+token_dis: str = ''
+```
+
 Resources:
 ----------
 
@@ -18,5 +26,9 @@ Resources:
 - https://docs.nextcord.dev/en/stable/ext/commands/api.html#cogs
 - https://discord.com/developers/docs/
 - https://discord.com/developers/applications
-- https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
+  
 
+
+Bot invitation
+--------------
+- https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
