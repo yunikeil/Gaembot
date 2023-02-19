@@ -3,11 +3,62 @@ import nextcord
 from random import randint
 
 
-class GameCirulliButton(nextcord.ui.Button["GameCirulli"]):
+class GameCirulliStartView(nextcord.ui.View):
     """
-    нужен конструктор ембедов, тут будет логика кнопок
-    ембедс скорее всего суну в основной класс игры
+    Зависит от решения в будущем.
+    Данный класс будет развиваться, в случае если базового функционала слэш команд не хватит для 
+     реализации настройки одной из игр...
     """
+    pass
+
+
+class GameCirulliView(nextcord.ui.View):
+    """
+    изначально я планировал это делать несколько по другому и в других файлах в итоге решил делать так, как делаю сейчас
+    я пока что сделал что то отдалённо похожее на то что я планировал, но сейчас это кажется излишним, можно упростить
+    кстати 2048 вообще можно и на кнопках чисто сделать, как крестики нолики
+    """
+    def __init__(self, game):
+        super().__init__()
+        self.game = game
+
+    @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
+    async def puff_left(self, button: nextcord.ui.Button):
+        button.disabled = True
+        pass
+
+    @nextcord.ui.button(label="⬆", style=nextcord.ButtonStyle.green, row=1)
+    async def move_up_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_up()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
+    @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
+    async def puff_right(self, button: nextcord.ui.Button):
+        pass
+
+    @nextcord.ui.button(label="⬅", style=nextcord.ButtonStyle.green, row=2)
+    async def move_left_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_left()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
+    @nextcord.ui.button(label="⬇", style=nextcord.ButtonStyle.green, row = 2)
+    async def move_down_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_down()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+    
+    @nextcord.ui.button(label="➡", style=nextcord.ButtonStyle.green, row=2)
+    async def move_right_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_right()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
     ...
 
 
@@ -19,6 +70,7 @@ class GameCirulli:
         Также тут объявляются все глобальные для класса поля,
          которые будут использоваться в последующих методах.
         """
+        self.size = size
         self.data: list[list[int]] = [
             [0 for x in range(size)] for y in range(size)
         ]
@@ -52,7 +104,7 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает объект картинки.
         """
-        # Тут код
+        """# Тут код
         size = 4
 
         # Создаем холст
@@ -69,7 +121,7 @@ class GameCirulli:
 
         img.save('GamePicture.png')
         img.show()
-        return print("image")
+        return print("image")"""
 
     def generate_points(self):
         """

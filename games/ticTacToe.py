@@ -44,7 +44,7 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
                 child.disabled = True
 
             view.stop()
-
+            
         await interaction.response.edit_message(content=content, view=view)
 
 
