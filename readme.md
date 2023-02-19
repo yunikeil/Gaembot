@@ -16,7 +16,7 @@ Installation
 > python3 -m venv Venv 
 > source Venv/bin/activate
 > pip install -r requrements.txt
-> python3 .\main.py
+> python3.10 .\main.py
 ```
 
 
