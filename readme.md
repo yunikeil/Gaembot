@@ -14,7 +14,7 @@ Installing
 
 # Linux systems
 > python3 -m venv Venv 
-> source Venv/bit/activate
+> source Venv/bin/activate
 > pip install -r requrements.txt
 > python3 .\main.py
 ```
