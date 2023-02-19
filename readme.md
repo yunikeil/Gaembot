@@ -6,18 +6,19 @@ Installing
 ----------
 
 ```shell
+# Windows systems
 > python -m venv Venv 
+> Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
+
+# Linux systems
+> python3 -m venv Venv 
+> source Venv/bit/activate
+> pip install -r requrements.txt
+> python3 .\main.py
 ```
 
-Configuration file
-------------------
-
-```python
-test_guilds: list[int] = []
-token_dis: str = ''
-```
 
 Resources:
 ----------
@@ -26,9 +27,5 @@ Resources:
 - https://docs.nextcord.dev/en/stable/ext/commands/api.html#cogs
 - https://discord.com/developers/docs/
 - https://discord.com/developers/applications
-  
-
-
-Bot invitation
---------------
 - https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
+
