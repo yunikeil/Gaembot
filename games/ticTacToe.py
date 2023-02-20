@@ -12,7 +12,7 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
     async def callback(self, interaction: nextcord.Interaction):
         assert self.view is not None
         view: TicTacToe = self.view
-        state = view.board[self.y][self.x]
+        state = view.board[self.y][self.x]  
         if state in (view.X, view.O):
             return
 
@@ -44,7 +44,7 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
                 child.disabled = True
 
             view.stop()
-
+            
         await interaction.response.edit_message(content=content, view=view)
 
 

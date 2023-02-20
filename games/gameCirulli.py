@@ -1,3 +1,65 @@
+import nextcord
+
+from random import randint
+
+
+class GameCirulliStartView(nextcord.ui.View):
+    """
+    Зависит от решения в будущем.
+    Данный класс будет развиваться, в случае если базового функционала слэш команд не хватит для 
+     реализации настройки одной из игр...
+    """
+    pass
+
+
+class GameCirulliView(nextcord.ui.View):
+    """
+    изначально я планировал это делать несколько по другому и в других файлах в итоге решил делать так, как делаю сейчас
+    я пока что сделал что то отдалённо похожее на то что я планировал, но сейчас это кажется излишним, можно упростить
+    кстати 2048 вообще можно и на кнопках чисто сделать, как крестики нолики
+    """
+    def __init__(self, game):
+        super().__init__()
+        self.game = game
+
+    @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
+    async def puff_left(self, button: nextcord.ui.Button):
+        button.disabled = True
+        pass
+
+    @nextcord.ui.button(label="⬆", style=nextcord.ButtonStyle.green, row=1)
+    async def move_up_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_up()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
+    @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
+    async def puff_right(self, button: nextcord.ui.Button):
+        pass
+
+    @nextcord.ui.button(label="⬅", style=nextcord.ButtonStyle.green, row=2)
+    async def move_left_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_left()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
+    @nextcord.ui.button(label="⬇", style=nextcord.ButtonStyle.green, row = 2)
+    async def move_down_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_down()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+    
+    @nextcord.ui.button(label="➡", style=nextcord.ButtonStyle.green, row=2)
+    async def move_right_button(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        ...
+        self.game.move_right()
+        data = '\n'.join('\t'.join(map(str, row)) for row in self.game.data)
+        await interaction.response.edit_message(content=f"2048\n{data}", view=self)
+
+    ...
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -9,11 +71,24 @@ class GameCirulli:
         Также тут объявляются все глобальные для класса поля,
          которые будут использоваться в последующих методах.
         """
-        # Переменная data отвечает за хранение информации.
+        self.size = size
         self.data: list[list[int]] = [
             [0 for x in range(size)] for y in range(size)
         ]
-        ...
+        number = randint(1, 100)
+        position1 = randint(1, size ** 2)
+        position2 = randint(1, size ** 2)
+        while position1 == position2:
+            position2 = randint(1, size ** 2)
+        if number < 79:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 2
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 2
+        elif number == 80:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 4
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 4
+        else:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 2
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 4
 
     def __del__(self):
         """
@@ -30,15 +105,21 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает объект картинки.
         """
+<<<<<<< HEAD
         # Тут код
         arr = GameCirulli.data
         size = len(arr)
+=======
+        """# Тут код
+        size = 4
+>>>>>>> bbfa75619448d4189a866b6a810b383717122c5b
 
         # Создаем холст
         img = Image.new('RGBA', (size * 100, size * 100), 'beige')  # холст
         idraw = ImageDraw.Draw(img)
 
         # Созданем линии холста
+<<<<<<< HEAD
         idraw.rectangle((0, 0, size, size * 100), fill='gray')
         idraw.rectangle((size * 100 - (size), 0, size * 100, size * 100), fill='gray')
         idraw.rectangle((0, 0, size * 100, size), fill='gray')
@@ -111,6 +192,18 @@ class GameCirulli:
         img.show()
 
         return print("image")
+=======
+        idraw.rectangle((0, 0, size, size * 100), fill='gray')  # левая граница
+        idraw.rectangle((size*100-size, 0, size*100, size*100), fill='gray')  # Правая граница
+        # отступ слева, отступ сверху, размер, размер
+        idraw.rectangle((0, 0, size*100, size), fill='gray')
+        # отступ слева, отступ сверху, размер, размер
+        idraw.rectangle((0, size*100-size, size*100, size*100), fill='gray')
+
+        img.save('GamePicture.png')
+        img.show()
+        return print("image")"""
+>>>>>>> bbfa75619448d4189a866b6a810b383717122c5b
 
     def generate_points(self):
         """
@@ -120,9 +213,54 @@ class GameCirulli:
         Возвращает фолс если генерация невозможна, тру если всё ок, меняет self.data)
         """
         # Тут код
-        
-        return 
-        ...
+        countZeros = 0
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.data[i][j] == 0:
+                    countZeros += 1
+        ZeroNumber = randint(1, countZeros)
+        number = 0
+        if randint(1, 8) == 8:
+            newNumeric = 4
+        else:
+            newNumeric = 2
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.data[i][j] == 0:
+                    number += 1
+                    if number == ZeroNumber:
+                        self.data[i][j] = newNumeric
+                        break
+            if number == ZeroNumber:
+                break
+        if countZeros > 1:
+            return True
+        result = False
+        for i in range(1, self.size-1):
+            for j in range(1, self.size-1):
+                if self.data[i][j] == self.data[i][j-1] or \
+                        self.data[i][j] == self.data[i-1][j] or \
+                        self.data[i][j] == self.data[i][j+1] or \
+                        self.data[i][j] == self.data[i+1][j]:
+                    result = True
+                    break
+            if result:
+                break
+        if not result:
+            for i in range(1, self.size-1):
+                if self.data[0][i] == self.data[0][i-1] or \
+                        self.data[0][i] == self.data[0][i+1] or \
+                        self.data[self.size-1][i] == self.data[self.size-1][i-1] or \
+                        self.data[self.size-1][i] == self.data[self.size-1][i+1]:
+                    result = True
+                    break
+                if self.data[i][0] == self.data[i-1][0] or \
+                        self.data[i][0] == self.data[i+1][0] or \
+                        self.data[i][self.size-1] == self.data[i-1][self.size-1] or \
+                        self.data[i][self.size-1] == self.data[i+1][self.size-1]:
+                    result = True
+                    break
+        return result
 
     def move_right(self):
         """
@@ -131,10 +269,31 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает результат выполнения drow_matrix
         """
-
-        if self.generate_points():
+        done = False
+        i = 0
+        while i < self.size:
+            j = self.size-2
+            afterUnion = False
+            while j > -1:
+                if j != self.size - 1  and self.data[i][j] != 0:
+                    if self.data[i][j+1] == 0:
+                        done = True
+                        self.data[i][j+1] = self.data[i][j]
+                        self.data[i][j] = 0
+                        j += 2
+                    elif self.data[i][j+1] == self.data[i][j] and not afterUnion:
+                        done = True
+                        self.data[i][j+1] *= 2
+                        self.data[i][j] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j -= 1
+            i += 1
+        if not done or self.generate_points():
             return self.drow_matrix()
-        else: return False
+        else:
+            return False
 
     def move_left(self):
         """
@@ -143,10 +302,31 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает результат выполнения drow_matrix
         """
-
-        if self.generate_points():
+        done = False
+        i = 0
+        while i < self.size:
+            j = 1
+            afterUnion = False
+            while j < self.size:
+                if j != 0 and self.data[i][j] != 0:
+                    if self.data[i][j-1] == 0:
+                        done = True
+                        self.data[i][j-1] = self.data[i][j]
+                        self.data[i][j] = 0
+                        j -= 2
+                    elif self.data[i][j-1] == self.data[i][j] and not afterUnion:
+                        done = True
+                        self.data[i][j-1] *= 2
+                        self.data[i][j] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j += 1
+            i += 1
+        if not done or self.generate_points():
             return self.drow_matrix()
-        else: return False
+        else:
+            return False
 
     def move_up(self):
         """
@@ -155,10 +335,31 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает результат выполнения drow_matrix
         """
-
-        if self.generate_points():
+        done = False
+        i = 0
+        while i < self.size:
+            j = 1
+            afterUnion = False
+            while j < self.size:
+                if j != 0 and self.data[j][i] != 0:
+                    if self.data[j-1][i] == 0:
+                        done = True
+                        self.data[j-1][i] = self.data[j][i]
+                        self.data[j][i] = 0
+                        j -= 2
+                    elif self.data[j-1][i] == self.data[j][i] and not afterUnion:
+                        done = True
+                        self.data[j-1][i] *= 2
+                        self.data[j][i] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j += 1
+            i += 1
+        if not done or self.generate_points():
             return self.drow_matrix()
-        else: return False
+        else:
+            return False
 
     def move_down(self):
         """
@@ -167,8 +368,28 @@ class GameCirulli:
         Нет входных значений, кроме самого объекта (self)
         Возвращает результат выполнения drow_matrix
         """
-
-        if self.generate_points():
+        done = False
+        i = 0
+        while i < self.size:
+            j = self.size - 2
+            afterUnion = False
+            while j > -1:
+                if j != self.size - 1 and self.data[j][i] != 0:
+                    if self.data[j+1][i] == 0:
+                        done = True
+                        self.data[j+1][i] = self.data[j][i]
+                        self.data[j][i] = 0
+                        j += 2
+                    elif self.data[j+1][i] == self.data[j][i] and not afterUnion:
+                        done = True
+                        self.data[j+1][i] *= 2
+                        self.data[j][i] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j -= 1
+            i += 1
+        if not done or self.generate_points():
             return self.drow_matrix()
-        else: return False
-    ...
+        else:
+            return False

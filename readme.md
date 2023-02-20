@@ -2,14 +2,23 @@
 
 ## A bot created within the framework of a subject for the study of teamwork
 
-Installing
+Installation
 ----------
 
 ```shell
+# Windows systems
 > python -m venv Venv 
+> Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
+
+# Linux systems
+> python3.10 -m venv Venv 
+> source Venv/bin/activate
+> pip install -r requrements.txt
+> python3.10 .\main.py
 ```
+
 
 Resources:
 ----------
