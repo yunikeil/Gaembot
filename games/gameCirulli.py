@@ -182,10 +182,10 @@ class GameCirulli:
                     idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
                     idraw.text((23 + (j * 100), (35 + i * 100)), str(number), font=ImageFont.truetype("arial.ttf", size=25), fill='white')
 
-        img.save('rectangle.png')
-        img.show()
+        #img.save('rectangle.png')
 
-        return print("image")
+
+        return img
 
     def generate_points(self):
         """
