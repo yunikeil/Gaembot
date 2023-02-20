@@ -1,4 +1,6 @@
 import nextcord
+from PIL import Image, ImageDraw, ImageFont
+
 
 from random import randint
 
@@ -61,7 +63,6 @@ class GameCirulliView(nextcord.ui.View):
 
     ...
 
-from PIL import Image, ImageDraw, ImageFont
 
 class GameCirulli:
     def __init__(self, size: int):
@@ -106,7 +107,7 @@ class GameCirulli:
         Возвращает объект картинки.
         """
         # Тут код
-        arr = GameCirulli.data
+        arr = self.data
         size = len(arr)
 
         # Создаем холст
@@ -133,8 +134,10 @@ class GameCirulli:
             i = i + 1
 
         # Рисуем квадраты для чисел
-        font = ImageFont.truetype("arial.ttf", size=40)
-        fontlittle = ImageFont.truetype("arial.ttf", size=35)
+        #font = ImageFont.truetype("arial.ttf", size=40)
+        #fontlittle = ImageFont.truetype("arial.ttf", size=35)
+        font = ImageFont.load_default()
+        fontlittle = ImageFont.load_default()
         for i in range(size):
             for j in range(size):
                 number = arr[i][j]

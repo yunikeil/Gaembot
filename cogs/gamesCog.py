@@ -2,6 +2,8 @@ import nextcord
 from nextcord import Interaction, SlashOption
 from nextcord.ext.commands import Cog
 
+import io
+
 from main import Bot
 from configuration import test_guilds
 from games.ticTacToe import TicTacToe
@@ -36,6 +38,15 @@ class GamesCog(Cog):
         if game_name == "2048":
             game = GameCirulli(4)
             data = '\n'.join('\t'.join(map(str, row)) for row in game.data)
+            e = discord.Embed()
+            e.set_image(url=)
+            #byte_im = buf.getvalue()
+            """
+            Во первых можно изменить всё 
+            СОздаётся сообщение с настройкой после кидает на новый канал игры определённого пользователя
+            и там работа идёт с сообщениями а не командами приложений.
+            Также есть вариант временного сохранения картинки и чтения его после
+            """
             await interaction.response.send_message(f"2048\n{data}", view=GameCirulliView(game))
         elif game_name == "Tic Tac Toe":
             await interaction.response.send_message(f"Tic Tac Toe: X goes first", view=TicTacToe())
