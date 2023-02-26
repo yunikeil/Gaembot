@@ -36,6 +36,7 @@ class Bot(commands.Bot, ABC):
             return
         raise error
 
+    
     ...
 
 
