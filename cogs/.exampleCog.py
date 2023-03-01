@@ -1,4 +1,5 @@
-from nextcord.ext.commands import Bot, Cog, slash_command
+import nextcord
+from nextcord.ext.commands import Bot, Cog
 
 
 class Ping(Cog):
@@ -8,9 +9,9 @@ class Ping(Cog):
     def __del__(self):
         ...
 
-    @slash_command(name="ping", description="A simple ping command.")
-    async def ping(self, inter) -> None:
-        await inter.respond(f"Pong! {self.bot.latency * 1000:.2f}ms")
+    @nextcord.slash_command(guild_ids=[], description="A simple ping command.")
+    async def ping(self, interaction: nextcord.Interaction):
+        await interaction.response.send_message(f"Pong! {self.bot.latency * 1000:.2f}ms")
 
 
 def setup(bot: Bot) -> None:

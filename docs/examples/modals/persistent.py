@@ -1,7 +1,7 @@
 import nextcord
 from nextcord.ext import commands
 
-TESTING_GUILD_ID = 123456798  # Replace with your testing guild id
+TESTING_GUILD_ID = 1075733298371899433  # Replace with your testing guild id
 
 
 # Define a simple Modal that persists between bot restarts
@@ -84,4 +84,4 @@ async def feedback(interaction: nextcord.Interaction):
     await interaction.response.send_modal(FeedbackModal())
 
 
-bot.run("token")
+bot.run("MTA3NTcyMzg4MzEzNjY4NDEwMw.GePhqJ.cCZcO4ztwCvJn-Bn3j2QXJjDhCVP7cqwgYHC3o")
