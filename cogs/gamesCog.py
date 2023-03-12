@@ -5,7 +5,7 @@ from nextcord.ext.commands import Cog
 import io
 
 from main import Bot
-from configuration import test_guilds
+from ..configuration import test_guilds
 from games.ticTacToe import TicTacToe
 from games.gameCirulli import GameCirulli, GameCirulliView
 
@@ -38,7 +38,7 @@ class GamesCog(Cog):
         if game_name == "2048":
             game = GameCirulli(4)
             data = '\n'.join('\t'.join(map(str, row)) for row in game.data)
-            e = discord.Embed()
+            e = nextcord.Embed()
             e.set_image(url=)
             #byte_im = buf.getvalue()
             """
