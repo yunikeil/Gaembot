@@ -92,7 +92,7 @@ async def eval(ctx, *, content):
         "ctx": ctx,
         "asyncio": asyncio,
     }
-
+    
     try:
         await aeval.aeval(content, standart_args, {})
     except Exception as ex:
