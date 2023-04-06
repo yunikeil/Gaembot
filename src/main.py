@@ -1,11 +1,16 @@
-import nextcord
-from nextcord.ext import commands
-
 import asyncio
 from abc import ABC
 from traceback import format_exception
 
+import nextcord
+from nextcord.ext import commands
 import aeval
+
+try:
+    from cogs.GamesCog import GamesSelectView
+except ImportError as ex:
+    GamesSelectView = False
+
 import configuration
 
 
@@ -18,12 +23,19 @@ class Bot(commands.Bot, ABC):
 
         self.DATA: dict = {
             'bot-started': False,
+            'GamesCog:GamesSelectView:persistent': False
         }
         self.OWNERS: list[int] = []
         self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
 
     async def on_ready(self):
+        if not bot.DATA['GamesCog:GamesSelectView:persistent'] and GamesSelectView:
+            bot.add_view(GamesSelectView())
+            print("GamesCog:GamesSelectView:persistent OK")
+            bot.DATA['GamesCog:GamesSelectView:persistent'] = True
+        else:
+            print("GamesCog:GamesSelectView:persistent EX")
         if not self.DATA['bot-started']:
             application_info = await self.application_info()
             self.OWNERS.append(application_info.owner.id)
@@ -92,7 +104,7 @@ async def eval(ctx, *, content):
         "ctx": ctx,
         "asyncio": asyncio,
     }
-
+    
     try:
         await aeval.aeval(content, standart_args, {})
     except Exception as ex:
