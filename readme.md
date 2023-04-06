@@ -1,32 +1,43 @@
 # Gaembot
 
-## A bot created within the framework of a subject for the study of teamwork
+## Описание проекта
 
-Installation
-----------
+Проект Gaembot - это бот для Discord, созданный в рамках проекта по изучению командной работы. Бот предназначен для игры в настольные игры, такие как 2048, крестики-нолики и шашки.
 
-```shell
-# Windows systems
+## Установка
+
+Для установки необходимо выполнить следующие команды:
+
+### Для Windows
+
 > python -m venv Venv 
 > Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
-```
 
-```shell
-# Linux systems
+### Для Linux
+
 > python3.10 -m venv Venv 
 > source Venv/bin/activate
 > pip install -r requrements.txt
 > python3.10 .\main.py
-```
 
-Resources:
-----------
+## Зависимости
+
+Бот использует следующие зависимости:
+
+- nextcord
+- aeval
+- pillow
+- sphinx
+-requests
+
+## Ресурсы
+
+Для разработки бота были использованы следующие ресурсы:
 
 - https://github.com/nextcord/nextcord
 - https://docs.nextcord.dev/en/stable/ext/commands/api.html#cogs
 - https://discord.com/developers/docs/
 - https://discord.com/developers/applications
-- https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
-
+- https://discord.com/api/oauth2/
