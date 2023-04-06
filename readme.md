@@ -12,6 +12,7 @@ Installation
 > pip install -r requrements.txt
 > python .\main.py
 ```
+
 ```shell
 # Linux systems
 > python3.10 -m venv Venv 
@@ -19,7 +20,6 @@ Installation
 > pip install -r requrements.txt
 > python3.10 .\main.py
 ```
-
 
 Resources:
 ----------
