@@ -8,19 +8,21 @@
 
 Для установки необходимо выполнить следующие команды:
 
-### Для Windows
-
+```shell-session
+# Для Windows
 > python -m venv Venv 
 > Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
+```
 
-### Для Linux
-
+```shell-session
+# Для Linux
 > python3.10 -m venv Venv 
 > source Venv/bin/activate
 > pip install -r requrements.txt
 > python3.10 .\main.py
+```
 
 ## Зависимости
 
