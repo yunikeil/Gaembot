@@ -11,7 +11,8 @@ Installation
 > Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
-
+```
+```shell
 # Linux systems
 > python3.10 -m venv Venv 
 > source Venv/bin/activate
