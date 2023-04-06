@@ -6,8 +6,8 @@ import io
 
 from main import Bot
 from ..configuration import test_guilds
-from games.ticTacToe import TicTacToe
-from games.gameCirulli import GameCirulli, GameCirulliView
+from ..games.ticTacToe import TicTacToe
+from ..games.gameCirulli import GameCirulli, GameCirulliView
 
 
 class GamesCog(Cog):
@@ -19,6 +19,9 @@ class GamesCog(Cog):
 
     @nextcord.slash_command(name="start", description="Group start command!", guild_ids=test_guilds)
     async def create_game(self, interaction: Interaction):
+        """
+        Корень группы команд для создания игр. Нигде не используется.
+        """
         pass
 
     @create_game.subcommand(name="play", description="Create a new game!")
