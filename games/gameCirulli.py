@@ -15,11 +15,11 @@ class GameCirulliStartView(nextcord.ui.View):
 
 
 class GameCirulliView(nextcord.ui.View):
-    raise "Данный класс ни где не используется!"
-    
     def __init__(self, game):
+        raise "Данный класс ни где не используется!"
         super().__init__()
         self.game = game
+
 
     @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
     async def puff_left(self, button: nextcord.ui.Button):
