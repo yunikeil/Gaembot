@@ -17,7 +17,7 @@ class Bot(commands.Bot, ABC):
                          **options)
 
         self.DATA: dict = {
-            'bot-started': False,
+            'bot-started': False
         }
         self.OWNERS: list[int] = []
         self.EVAL_OWNER: list[int] = []
@@ -30,6 +30,10 @@ class Bot(commands.Bot, ABC):
             self.EVAL_OWNER.append(application_info.owner.id)
             self.DATA['bot-started'] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
+        cogs_add_on_start: list[str] = ["gamesCog"]
+        if cogs_add_on_start:
+            [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_start]
+        
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, nextcord.ext.commands.CommandNotFound):
@@ -101,7 +105,4 @@ async def eval(ctx, *, content):
 
 
 if __name__ == "__main__":
-    cogs_add_on_start: list[str] = ["gamesCog"]
-    if cogs_add_on_start:
-        [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_start]
     bot.run(bot.config.token_dis)

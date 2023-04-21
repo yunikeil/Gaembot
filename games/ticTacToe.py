@@ -3,6 +3,11 @@ import nextcord
 from typing import List
 
 
+class TicTacToeStartView(nextcord.ui.View):
+    # need code here
+    ...
+
+
 class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
     def __init__(self, x: int, y: int):
         super().__init__(style=nextcord.ButtonStyle.secondary, label="\u200b", row=y)

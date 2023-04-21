@@ -1,13 +1,19 @@
 import nextcord
-from nextcord import Interaction, SlashOption
+from nextcord.ext import commands
 from nextcord.ext.commands import Cog
 
 import io
 
-from main import Bot
 from ..configuration import test_guilds
-from ..games.ticTacToe import TicTacToe
-from ..games.gameCirulli import GameCirulli, GameCirulliView
+from ..games.ticTacToe import TicTacToe, TicTacToeStartView
+from ..games.gameCirulli import GameCirulliView, GameCirulliStartView
+
+
+class GamesView(nextcord.ui.View):
+    def __init__():
+        ...
+    # need code here
+    ...
 
 
 class GamesCog(Cog):
@@ -17,8 +23,10 @@ class GamesCog(Cog):
     def __del__(self):
         ...
 
-    
-
+    @commands.command()
+    async def games_msg(self, ctx):
+        # need code here
+        ...
 
 def setup(bot: Bot) -> None:
     print("gamesGog.py loaded")
