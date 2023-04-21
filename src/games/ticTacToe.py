@@ -9,6 +9,19 @@ class TicTacToeStartView(nextcord.ui.View):
 
 
 class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
+    """
+    Класс представляющий кнопку на поле TicTacToe. Служит для отображения 
+    текущего состояния игры в виде крестиков и ноликов.
+
+    Атрибуты:
+        x (int): Позиция кнопки по горизонтали.
+        y (int): Позиция кнопки по вертикали.
+
+    Методы:
+        callback: Обработчик событий нажатия на кнопки.
+
+    """
+
     def __init__(self, x: int, y: int):
         super().__init__(style=nextcord.ButtonStyle.secondary, label="\u200b", row=y)
         self.x = x
@@ -17,7 +30,7 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
     async def callback(self, interaction: nextcord.Interaction):
         assert self.view is not None
         view: TicTacToe = self.view
-        state = view.board[self.y][self.x]  
+        state = view.board[self.y][self.x]
         if state in (view.X, view.O):
             return
 
@@ -49,11 +62,26 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
                 child.disabled = True
 
             view.stop()
-            
+
         await interaction.response.edit_message(content=content, view=view)
 
 
 class TicTacToe(nextcord.ui.View):
+    """
+    Класс представляющий поле игры TicTacToe. Служит для создания и отображения 
+    игрового поля с кнопками.
+
+    Атрибуты:
+        children (List[TicTacToeButton]): Список кнопок на доске.
+        X (int): Константа для обозначения игрока X.
+        O (int): Константа для обозначения игрока O.
+        Tie (int): Константа для обозначения ничьей.
+        current_player (int): Текущий игрок на доске.
+        board (List[List[int]]): Двумерный список для хранения состояния доски.
+
+    Методы:
+        check_board_winner: проверяет завершилась игра или нет.
+    """
     children: List[TicTacToeButton]
     X = -1
     O = 1
@@ -81,7 +109,8 @@ class TicTacToe(nextcord.ui.View):
                 return self.X
 
         for line in range(3):
-            value = self.board[0][line] + self.board[1][line] + self.board[2][line]
+            value = self.board[0][line] + \
+                self.board[1][line] + self.board[2][line]
             if value == 3:
                 return self.O
             elif value == -3:

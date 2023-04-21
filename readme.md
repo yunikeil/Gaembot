@@ -1,31 +1,51 @@
 # Gaembot
 
-## A bot created within the framework of a subject for the study of teamwork
+Gaembot - это пример проекта, разработанного в рамках изучения командной работы. В современном мире многие проекты являются командными, и для того, чтобы успешно работать в такой среде, необходимо понимать основные принципы командной работы и уметь применять их на практике.
 
-Installation
-----------
+Кроме того, создание бота для Discord может быть полезным упражнением для практики программирования и разработки приложений. Discord - это платформа для общения и координации в командной среде, и боты для нее могут значительно упростить процесс общения и взаимодействия между участниками.
 
-```shell
-# Windows systems
+Проект Gaembot предназначен для игры в настольные игры, что делает его интересным примером приложения, использующего навыки программирования для создания интерактивных игровых сред. Создание бота для игр может показать разработчикам, как применять программные навыки для создания интересных и креативных проектов.
+
+## Описание проекта
+
+Gaembot - это бот для Discord, разработанный в рамках проекта, направленного на изучение командной работы. Его функционал включает возможность играть в такие настольные игры, как 2048, крестики-нолики и шашки.
+
+## Установка
+
+Для установки необходимо выполнить следующие команды:
+
+```shell-session
+# Для Windows
 > python -m venv Venv 
 > Venv\Scripts\Activate.ps1
 > pip install -r requrements.txt
 > python .\main.py
+```
 
-# Linux systems
+```shell-session
+# Для Linux
 > python3.10 -m venv Venv 
 > source Venv/bin/activate
 > pip install -r requrements.txt
 > python3.10 .\main.py
 ```
 
+## Зависимости
 
-Resources:
-----------
+Бот использует следующие зависимости:
+
+- nextcord
+- aeval
+- pillow
+- sphinx
+- requests
+
+## Ресурсы
+
+Для разработки бота были использованы следующие ресурсы:
 
 - https://github.com/nextcord/nextcord
 - https://docs.nextcord.dev/en/stable/ext/commands/api.html#cogs
 - https://discord.com/developers/docs/
 - https://discord.com/developers/applications
-- https://discord.com/api/oauth2/authorize?client_id=1075723883136684103&permissions=8&scope=bot%20applications.commands
-
+- https://discord.com/api/oauth2/
