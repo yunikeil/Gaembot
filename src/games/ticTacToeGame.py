@@ -1,10 +1,19 @@
 import nextcord
 
-from typing import List
+from typing import List, Optional
+
+
 
 
 class TicTacToeStartView(nextcord.ui.View):
-    # need code here
+    def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
+        super().__init__(timeout=timeout, auto_defer=auto_defer)
+        self.category_id: int = 1093504369648996473
+    
+    @nextcord.ui.button(label="Начать игру!", style=nextcord.ButtonStyle.green)
+    async def cancel(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await interaction.response.send_message(view=TicTacToe())
+
     ...
 
 

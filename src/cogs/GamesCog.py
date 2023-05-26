@@ -1,13 +1,12 @@
 import nextcord
-from nextcord import Interaction, SlashOption
 from nextcord.ext.commands import Cog
 from nextcord.ext import commands, tasks
 from nextcord.ext.commands import Bot, Cog, Context
 
 from configuration import test_guilds
-from games.ticTacToe import TicTacToe
-from games.gameCirulli import GameCirulliStartView, GameCirulliView
-from games.gameCheckers import TempVar
+from games.ticTacToeGame import TicTacToeStartView
+from games.CirulliGame import GameCirulliStartView
+#from games.CheckersGame import TempVar
 
 
 class GamesSelect(nextcord.ui.Select):
@@ -15,7 +14,8 @@ class GamesSelect(nextcord.ui.Select):
     Класс представляющий из себя item GamesSelectView.
     Служит выпадающим меню с выбором игр.
     """
-    def __init__(self):
+    def __init__(self, bot: Bot):
+        self.bot = bot
         options = [
             nextcord.SelectOption(label="2048", description="Create solo game"),
             nextcord.SelectOption(label="Tic-Tac-Toe", description="Create duo game"),
@@ -30,18 +30,28 @@ class GamesSelect(nextcord.ui.Select):
         )
 
     async def callback(self, interaction: nextcord.Interaction):
-        await interaction.response.send_message()  # !!!
-
+        games = {
+            "2048": GameCirulliStartView,
+            "Tic-Tac-Toe": TicTacToeStartView,
+            "Checkers": ...,
+        }
+        guild = interaction.guild
+        creator = interaction.user.name
+        game_start_view = games[self.values[0]]()
+        category = nextcord.utils.get(guild.categories, id=game_start_view.category_id)
+        channel = await guild.create_text_channel(f"{creator} создал {self.values[0]} игру", category=category)
+        await interaction.response.send_message(f"Создана команата <#{channel.id}>\nПриятной игры!", ephemeral=True)
+        await channel.send(view=game_start_view)
 
 class GamesSelectView(nextcord.ui.View):
     """
     Класс представляющий из себя обёртку для GamesSelect.
     Служит выпадающим меню с выбором игр.
     """
-    def __init__(self):
+    def __init__(self, bot):
         super().__init__()
         self.timeout = None 
-        self.add_item(GamesSelect())
+        self.add_item(GamesSelect(bot=bot))
 
 
 class GamesCog(Cog):
@@ -55,6 +65,9 @@ class GamesCog(Cog):
     def __del__(self):
         ...
 
+    def cog_unload(self):
+        ...
+    
     @commands.command()
     async def games_select_message(self, ctx: Context):
         """
@@ -63,6 +76,8 @@ class GamesCog(Cog):
         :param ctx: объект класса Context
         :type ctx: nextcord.ext.commands.Context
         """
+        await ctx.message.delete()
+        await ctx.channel.send("Выберите игру:", view=GamesSelectView(bot=self.bot))
         ...
 
 

@@ -23,28 +23,21 @@ class Bot(commands.Bot, ABC):
 
         self.DATA: dict = {
             'bot-started': False,
-            'GamesCog:GamesSelectView:persistent': False
         }
         self.OWNERS: list[int] = []
         self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
 
     async def on_ready(self):
-        if not bot.DATA['GamesCog:GamesSelectView:persistent'] and GamesSelectView:
-            bot.add_view(GamesSelectView())
-            print("GamesCog:GamesSelectView:persistent OK")
-            bot.DATA['GamesCog:GamesSelectView:persistent'] = True
-        else:
-            print("GamesCog:GamesSelectView:persistent EX")
         if not self.DATA['bot-started']:
             application_info = await self.application_info()
             self.OWNERS.append(application_info.owner.id)
             self.EVAL_OWNER.append(application_info.owner.id)
             self.DATA['bot-started'] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
-        cogs_add_on_start: list[str] = ["gamesCog"]
-        if cogs_add_on_start:
-            [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_start]
+        cogs_add_on_ready: list[str] = ["GamesCog"]
+        if cogs_add_on_ready:
+            [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_ready]
         
 
     async def on_command_error(self, ctx, error):
