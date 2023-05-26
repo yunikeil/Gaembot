@@ -19,7 +19,8 @@ class GamesSelect(nextcord.ui.Select):
         options = [
             nextcord.SelectOption(label="2048", description="Create solo game"),
             nextcord.SelectOption(label="Tic-Tac-Toe", description="Create duo game"),
-            nextcord.SelectOption(label="Checkers", description="Create duo game")
+            nextcord.SelectOption(label="Checkers", description="Create duo game"),
+            nextcord.SelectOption(label="Очистить выбор", description="Для очистики выбора"),
         ]
         super().__init__(
             custom_id="GamesCog:GamesSelect",
@@ -35,6 +36,8 @@ class GamesSelect(nextcord.ui.Select):
             "Tic-Tac-Toe": TicTacToeStartView,
             "Checkers": ...,
         }
+        if self.values[0] == "Очистить выбор":
+            return
         guild = interaction.guild
         creator = interaction.user.name
         game_start_view = games[self.values[0]]()
