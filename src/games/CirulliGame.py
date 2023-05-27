@@ -9,6 +9,15 @@ class GameCirulliStartView(nextcord.ui.View):
     Класс, отвечающий за создание представления для старта игры в 2048.
     Содержит стартовый Embed, кнопку и селектор.
     """
+    def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
+        super().__init__(timeout=timeout, auto_defer=auto_defer)
+        self.category_id: int = 1093504405149601875
+    
+    @nextcord.ui.button(label="Начать игру!", style=nextcord.ButtonStyle.green)
+    async def start(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        button.disabled = True
+        await interaction.response.send_message(view=GameCirulliView())
+        await interaction.message.edit(view=self)
 
 
 class GameCirulliView(nextcord.ui.View):
