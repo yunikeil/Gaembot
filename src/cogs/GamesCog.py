@@ -23,7 +23,6 @@ class GamesSelect(nextcord.ui.Select):
             nextcord.SelectOption(label="Очистить выбор", description="Для очистики выбора"),
         ]
         super().__init__(
-            custom_id="GamesCog:GamesSelect",
             placeholder="Выберите интересующую вас игру...",
             min_values=1,
             max_values=1,
@@ -32,19 +31,22 @@ class GamesSelect(nextcord.ui.Select):
 
     async def callback(self, interaction: nextcord.Interaction):
         games = {
-            "2048": GameCirulliStartView,
-            "Tic-Tac-Toe": TicTacToeStartView,
-            "Checkers": ...,
+            "2048": [GameCirulliStartView, 1093504817260929054],
+            "Tic-Tac-Toe": [TicTacToeStartView, 1093504589736726528],
+            "Checkers": [..., 1093504876056682630]
         }
-        if self.values[0] == "Очистить выбор":
-            return
-        guild = interaction.guild
-        creator = interaction.user.name
-        game_start_view = games[self.values[0]]()
-        category = nextcord.utils.get(guild.categories, id=game_start_view.category_id)
-        channel = await guild.create_text_channel(f"{creator} создал {self.values[0]} игру", category=category)
-        await interaction.response.send_message(f"Создана команата <#{channel.id}>\nПриятной игры!", ephemeral=True)
-        await channel.send(view=game_start_view)
+        if self.values[0] != "Очистить выбор":
+            guild = interaction.guild
+            creator = interaction.user.name
+            role = guild.get_role(games[self.values[0]][1])
+            if role in interaction.user.roles:
+                game_start_view = games[self.values[0]][0]()
+                category = nextcord.utils.get(guild.categories, id=game_start_view.category_id)
+                channel = await guild.create_text_channel(f"{creator} создал {self.values[0]} игру", category=category)
+                await interaction.response.send_message(f"Создана команата <#{channel.id}>\nПриятной игры!", ephemeral=True)
+                await channel.send(view=game_start_view)
+            else:
+                await interaction.response.send_message(f"У вас нет данной роли: <@&{games[self.values[0]][1]}>")
 
 class GamesSelectView(nextcord.ui.View):
     """

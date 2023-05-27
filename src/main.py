@@ -35,7 +35,7 @@ class Bot(commands.Bot, ABC):
             self.EVAL_OWNER.append(application_info.owner.id)
             self.DATA['bot-started'] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
-        cogs_add_on_ready: list[str] = ["GamesCog"]
+        cogs_add_on_ready: list[str] = ["GamesCog", "RolesCog"]
         if cogs_add_on_ready:
             [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_ready]
         
