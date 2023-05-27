@@ -69,7 +69,7 @@ class GameCirulliView(nextcord.ui.View):
         """
         Генерация новой точки в матрице.
         """
-
+        
         ...
 
     @nextcord.ui.button(style=nextcord.ButtonStyle.secondary, label="\u200b", row=1, disabled=True)
