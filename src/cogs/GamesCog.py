@@ -21,7 +21,7 @@ class GamesSelect(nextcord.ui.Select):
         options = [
             nextcord.SelectOption(label="2048", description="Create solo game"),
             nextcord.SelectOption(label="Tic-Tac-Toe", description="Create duo game"),
-            nextcord.SelectOption(label="Checkers", description="Create duo game"),
+            #nextcord.SelectOption(label="Checkers", description="Create duo game"),
             nextcord.SelectOption(
                 label="Очистить выбор", description="Для очистики выбора"
             ),
