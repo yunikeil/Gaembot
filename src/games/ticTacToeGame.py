@@ -8,9 +8,11 @@ class TicTacToeStartView(nextcord.ui.View):
     def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
         super().__init__(timeout=timeout, auto_defer=auto_defer)
         self.category_id: int = 1093504369648996473
-    
+
     @nextcord.ui.button(label="Начать игру!", style=nextcord.ButtonStyle.green)
-    async def start(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+    async def start(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
         button.disabled = True
         await interaction.response.send_message(view=TicTacToe())
         await interaction.message.edit(view=self)
@@ -18,7 +20,7 @@ class TicTacToeStartView(nextcord.ui.View):
 
 class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
     """
-    Класс представляющий кнопку на поле TicTacToe. Служит для отображения 
+    Класс представляющий кнопку на поле TicTacToe. Служит для отображения
     текущего состояния игры в виде крестиков и ноликов.
 
     Атрибуты:
@@ -72,7 +74,9 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
             view.stop()
             await interaction.response.edit_message(content=content, view=view)
 
-            await interaction.channel.send("Игра окончена!\nКанал удалится через 10 секунд")
+            await interaction.channel.send(
+                "Игра окончена!\nКанал удалится через 10 секунд"
+            )
             await asyncio.sleep(10)
             await interaction.channel.delete()
             # TODO: Сюда впихнуть код по удалению странички
@@ -82,7 +86,7 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
 
 class TicTacToe(nextcord.ui.View):
     """
-    Класс представляющий поле игры TicTacToe. Служит для создания и отображения 
+    Класс представляющий поле игры TicTacToe. Служит для создания и отображения
     игрового поля с кнопками.
 
     Атрибуты:
@@ -96,6 +100,7 @@ class TicTacToe(nextcord.ui.View):
     Методы:
         check_board_winner: проверяет завершилась игра или нет.
     """
+
     children: List[TicTacToeButton]
     X = -1
     O = 1
@@ -123,8 +128,7 @@ class TicTacToe(nextcord.ui.View):
                 return self.X
 
         for line in range(3):
-            value = self.board[0][line] + \
-                self.board[1][line] + self.board[2][line]
+            value = self.board[0][line] + self.board[1][line] + self.board[2][line]
             if value == 3:
                 return self.O
             elif value == -3:
