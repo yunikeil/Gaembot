@@ -68,10 +68,10 @@ class GamesCog(Cog):
         self.bot = bot
 
     def __del__(self):
-        ...
+        pass
 
     def cog_unload(self):
-        ...
+        pass
     
     @commands.command()
     async def games_select_message(self, ctx: Context):
