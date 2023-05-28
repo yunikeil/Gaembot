@@ -8,3 +8,4 @@ games.gameCirulli
 -----------------
 
 .. autoclass:: games.gameCirulli.GameCirulliView
+    :members:

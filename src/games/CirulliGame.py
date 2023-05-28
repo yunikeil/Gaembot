@@ -40,7 +40,7 @@ class GameCirulliStartView(nextcord.ui.View):
     Содержит стартовый Embed, кнопку и селектор.
     """
 
-    def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
+    def __init__(self, *, timeout=180, auto_defer: bool = True) -> None:
         super().__init__(timeout=timeout, auto_defer=auto_defer)
         self.category_id: int = 1093504405149601875
         self.button_saved = None

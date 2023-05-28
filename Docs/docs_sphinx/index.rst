@@ -16,9 +16,6 @@ Welcome to GaemBot's documentation!
    games
    configuration
    support
-   test
-
-
 
 Indices and tables
 ==================

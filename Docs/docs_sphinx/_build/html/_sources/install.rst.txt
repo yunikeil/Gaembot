@@ -1,4 +1,4 @@
-Lets start with GaemBot
+Lets start with GaemBot1
 =======================
 
 A bot created within the framework of a subject for the study of teamwork

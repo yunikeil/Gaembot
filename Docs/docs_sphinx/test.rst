@@ -7,8 +7,7 @@ Test
    :caption: Contents:
 
    cookbook
-   cli
-   api
+   
 
 
 Section
@@ -60,8 +59,30 @@ You can learn more about this at :pep:`8` or :rfc:`1984`.
 
 
 
+These flags allow you to change the behavior of Crawler.
+Check out how to use them in the Cookbook.
 
+.. option:: -d <sec>, --delay <sec>
 
+    Use a delay in between page fetchs so we don't overwhelm the remote server.
+    Value in seconds.
+
+Default: 1 second
+    
+.. option:: -i <regex>, --ignore <regex>
+
+    Ignore pages that match a specific pattern.
+
+Default: None
+
+Getting started with Crawler is easy.
+The main class you need to care about is :class:`~games.CirulliGame.GameCirulliView`
+
+games.CirulliGame
+-----------------
+
+.. autoclass:: games.CirulliGame.GameCirulliView
+    :members:
 
 
 

@@ -3,7 +3,7 @@ import sys
 import sphinx_rtd_theme
 
 
-sys.path.insert(0, os.path.abspath('../src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, "src")))
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.abspath('../src'))
 project = 'GaemBot'
 copyright = '2023, yunikeil'
 author = 'yunikeil'
-release = '0.1'
+release = '0.7'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
