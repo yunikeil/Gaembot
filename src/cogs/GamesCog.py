@@ -57,7 +57,8 @@ class GamesSelect(nextcord.ui.Select):
                 await channel.send(view=game_start_view)
             else:
                 await interaction.response.send_message(
-                    f"У вас нет данной роли: <@&{games[self.values[0]][1]}>"
+                    f"У вас нет данной роли: <@&{games[self.values[0]][1]}>",
+                    ephemeral=True
                 )
 
 
