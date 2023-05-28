@@ -9,6 +9,37 @@ import nextcord
 from PIL import Image, ImageDraw, ImageFont
 
 
+class Dropdown(nextcord.ui.Select):
+    def __init__(self, ViewParrent):
+        self.ViewParrent = ViewParrent
+        # Set the options that will be presented inside the dropdown
+        options = [
+            nextcord.SelectOption(
+                label="4", description="4x4"
+            ),
+            nextcord.SelectOption(
+                label="6", description="6x6"
+            ),
+            nextcord.SelectOption(
+                label="8", description="8x8"
+            )
+        ]
+
+        super().__init__(
+            placeholder="Choose your size 2048...",
+            min_values=1,
+            max_values=1,
+            options=options,
+        )
+
+    async def callback(self, interaction: nextcord.Interaction):
+        self.ViewParrent.remove_item(self)
+        self.ViewParrent.add_item(self.ViewParrent.button_saved)
+        await interaction.message.edit(view=self.ViewParrent)
+        game = GameCirulliView(size=int(self.values[0]))
+        await interaction.response.send_message(view=game, file=game.drow_matrix())
+
+
 class GameCirulliStartView(nextcord.ui.View):
     """
     Класс, отвечающий за создание представления для старта игры в 2048.
@@ -18,14 +49,17 @@ class GameCirulliStartView(nextcord.ui.View):
     def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
         super().__init__(timeout=timeout, auto_defer=auto_defer)
         self.category_id: int = 1093504405149601875
+        self.button_saved = None
+        
 
     @nextcord.ui.button(label="Начать игру!", style=nextcord.ButtonStyle.green)
     async def start(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
     ):
         button.disabled = True
-        game = GameCirulliView(size=4)
-        await interaction.response.send_message(view=game, file=game.drow_matrix())
+        self.button_saved = button
+        self.add_item(Dropdown(self))
+        self.remove_item(button)
         await interaction.message.edit(view=self)
 
 
