@@ -1,8 +1,4 @@
-Информация по главному файлу main.py
+Information on the main file main.py
 ====================================
 
-В данном документе описана основная логика работы.
-
-
-
-
+This document describes the basic logic of the work.

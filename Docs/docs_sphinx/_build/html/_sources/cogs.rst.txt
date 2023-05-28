@@ -1,5 +1,4 @@
-Информация по директории cogs
-=============================
+Information about the cogs directory
+====================================
 
-В данной папке хранятся все коги, которые могут подключаться из файла main.py
-
+This folder stores all the logs that can be connected from the file main.py
