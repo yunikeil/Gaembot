@@ -9,7 +9,9 @@ class RolesSelectView(nextcord.ui.View):
         self.timeout = None
 
     @nextcord.ui.button(label="2048", style=nextcord.ButtonStyle.green)
-    async def first_game(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+    async def first_game(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
         member, guild = interaction.user, interaction.guild
         role = guild.get_role(1093504817260929054)
         if role in member.roles:
@@ -17,29 +19,43 @@ class RolesSelectView(nextcord.ui.View):
             await interaction.response.send_message("Удалена 2048 роль", ephemeral=True)
         else:
             await member.add_roles(role)
-            await interaction.response.send_message("Добавлена 2048 роль", ephemeral=True)
-    
+            await interaction.response.send_message(
+                "Добавлена 2048 роль", ephemeral=True
+            )
+
     @nextcord.ui.button(label="Tic-Tac-Toe", style=nextcord.ButtonStyle.green)
-    async def second_game(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+    async def second_game(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
         member, guild = interaction.user, interaction.guild
         role = guild.get_role(1093504589736726528)
         if role in member.roles:
             await member.remove_roles(role)
-            await interaction.response.send_message("Удалена Tic-Tac-Toe роль", ephemeral=True)
+            await interaction.response.send_message(
+                "Удалена Tic-Tac-Toe роль", ephemeral=True
+            )
         else:
             await member.add_roles(role)
-            await interaction.response.send_message("Добавлена Tic-Tac-Toe роль", ephemeral=True)
-    
+            await interaction.response.send_message(
+                "Добавлена Tic-Tac-Toe роль", ephemeral=True
+            )
+
     @nextcord.ui.button(label="Checkers", style=nextcord.ButtonStyle.green)
-    async def third_game(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+    async def third_game(
+        self, button: nextcord.ui.Button, interaction: nextcord.Interaction
+    ):
         member, guild = interaction.user, interaction.guild
         role = guild.get_role(1093504876056682630)
         if role in member.roles:
             await member.remove_roles(role)
-            await interaction.response.send_message("Удалена Checkers роль", ephemeral=True)
+            await interaction.response.send_message(
+                "Удалена Checkers роль", ephemeral=True
+            )
         else:
             await member.add_roles(role)
-            await interaction.response.send_message("Добавлена Checkers роль", ephemeral=True)
+            await interaction.response.send_message(
+                "Добавлена Checkers роль", ephemeral=True
+            )
 
 
 class RolesCog(Cog):
@@ -48,7 +64,7 @@ class RolesCog(Cog):
 
     def __del__(self):
         ...
-    
+
     @commands.command()
     async def role_select_message(self, ctx: Context):
         await ctx.message.delete()
