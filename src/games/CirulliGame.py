@@ -85,70 +85,105 @@ class GameCirulliView(nextcord.ui.View):
         """
         Отрисовка матрицы игры.
         """
+
+        # Тут код
         arr = self.data
         size = len(arr)
 
         # Создаем холст
-        img = Image.new("RGBA", (size * 100, size * 100), "beige")  # холст
+        img = Image.new('RGBA', (size * 100, size * 100), 'beige')  # холст
         idraw = ImageDraw.Draw(img)
 
         # Созданем линии холста
-        idraw.rectangle((0, 0, size, size * 100), fill="gray")
-        idraw.rectangle((size * 100 - (size), 0, size * 100, size * 100), fill="gray")
-        idraw.rectangle((0, 0, size * 100, size), fill="gray")
-        idraw.rectangle((0, size * 100 - (size), size * 100, size * 100), fill="gray")
+        idraw.rectangle((0, 0, size, size * 100), fill='gray')
+        idraw.rectangle((size * 100 - (size), 0, size * 100, size * 100), fill='gray')
+        idraw.rectangle((0, 0, size * 100, size), fill='gray')
+        idraw.rectangle((0, size * 100 - (size), size * 100, size * 100),
+                        fill='gray')
 
         i = 1
 
         # Рисуем поле
         while i <= size:
-            idraw.line((i * 100, 0, i * 100, size * 100), fill=("gray"), width=10)
+            idraw.line((i * 100, 0, i * 100, size * 100), fill=('gray'), width=10)
             i = i + 1
 
         i = 1
         while i <= size:
-            idraw.line((0, i * 100, size * 100, i * 100), fill=("gray"), width=10)
+            idraw.line((0, i * 100, size * 100, i * 100), fill=('gray'), width=10)
             i = i + 1
 
         # Рисуем квадраты для чисел
         font = ImageFont.truetype("arial.ttf", size=40)
-        colors = {
-            2: "#FAEBA7",
-            4: "#FFE4C4",
-            8: "orange",
-            16: "orange",
-            32: "orange",
-            64: "RED",
-            128: "YELLOW",
-            256: "YELLOW",
-            512: "YELLOW",
-            1024: "YELLOW",
-            2048: "YELLOW",
-        }
+        fontlittle = ImageFont.truetype("arial.ttf", size=35)
+        #font = ImageFont.load_default()
+        #fontlittle = ImageFont.load_default()
+        """
+        ⠀⠀⠀⠀⡀⠄⠠⠀⠠⠀⢀⠪No switches?⡐⡅⡇⢇⠕⡌⡢⢑⠌⡢⢑⠌⡆⢕⢌⢢⠱⡨⢢⢑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⢂⠪⡐⢌⢂⠪⡐⢅⢪⠨⡢⡃⡪.
+        ⠀⠐⠈⠀⠀⡀⠐⢈⠠⠐⡀⢇⢕⠕⢅⠣⡑⠔⢌⠢⠡⡊⢔⢑⠌⡆⢕⢔⠱⡨⢢⠱⡨⢪⢘⢌⢪⠸⡨⡪⡘⡌⡪⡘⢔⢑⢌⠢⡡⡑⢌⠢⡡⡑⢌⢢⢑⠕⡌⢆⠕⡅⢕⠌⡆⢕⠅⡂⡂..
+        ⠀⡁⠀⠄⠁⠀⡈⠠⠀⡂⢜⢌⠢⡑⢅⠕⢌⠪⡐⠅⢕⠐⢅⠢⠱⡘⡔⢅⠣⡊⢆⠣⡪⢢⠱⡨⡂⢇⠕⢜⢸⢘⢜⢜⢜⢌⢆⢣⠪⡨⢢⠱⡐⡅⡕⢌⢆⢣⢱⠡⡃⢎⠢⡃⡎⡪⢂⠂⡂..
+        ⠀⢂⠐⠀⡀⠁⠄⠂⡁⢌⢆⠢⡑⡌⡢⡑⢔⠡⠊⠌⡐⢈⠢⡑⠅⢕⠸⡨⡊⡪⠪⡘⢌⢢⠱⡨⡨⡂⡣⡑⡅⡣⡱⢱⠸⡘⡜⡔⡕⢜⢰⢡⢱⠨⡊⡆⡣⡱⡡⢣⢑⢅⢣⢱⢸⢘⠠⠨⢐..
+        ⠐⠠⠈⠄⡀⠡⠀⠡⠀⢂⠂⡑⠨⠐⠀⠂⠠⠀⠂⠠⢀⠢⠡⡊⢜⠠⠈⠢⡑⠜⡌⡪⡨⠢⡑⢔⢌⢢⠱⡨⢢⠱⡘⡌⢎⢎⢪⢸⢨⠪⡢⡣⡱⡱⡱⡸⡨⡢⢣⢑⠕⡌⢆⢣⠕⠠⠨⢐⠐..
+        ⠀⠡⠈⠄⠂⡐⠈⠀⠅⠀⠠⠀⠐⠈⠀⢁⠠⠐⡈⠔⡡⢊⢌⠢⡑⢌⠢⡀⠨⠈⠢⡊⢌⠪⡨⠢⡑⢔⢑⠌⢆⠣⡑⡌⢆⠕⢅⢣⠱⡱⡱⡸⡸⡰⡱⡸⡨⡊⢆⢕⢑⠜⡜⠌⢄⠑⡈⠄⠌..
+        ⠈⠄⢁⠂⡁⠄⠂⡈⢀⠂⠀⠄⢂⠨⡐⢔⠨⡂⡪⠨⡂⢕⢐⢅⠪⡐⢅⠪⡐⡈⡀⠐⠀⠅⠂⠡⠈⠐⠀⠅⢁⠑⠨⠨⠢⡑⢅⢕⠱⡱⡸⡸⡸⡸⡨⡢⠣⡊⢆⠪⡂⡇⡃⠅⡂⠌⠄⢁⢀..
+        ⠀⠌⠠⠐⠀⢂⠁⠄⠂⠠⠁⠄⠂⡑⢌⠢⡑⡐⢌⢌⠢⡑⢔⢐⢅⠪⡐⢅⠪⡐⢌⠢⡐⡀⠂⠐⠈⠀⠁⠀⠄⠐⠈⠀⢂⠨⠐⠔⢅⠇⡇⡇⡇⡇⢇⢪⢑⠌⢆⢣⠣⢁⢐⠐⠐⠀⡐⠠⠂..
+        ⠀⠌⠐⢈⠈⠠⠐⢀⠁⠂⡁⠐⢀⠈⠂⢕⢐⢌⠢⠢⡑⢌⠢⡑⡐⡑⢌⠢⠨⡂⢅⠕⡐⢌⠪⠨⡐⡐⢄⢂⠀⠐⠀⢁⠠⠀⠡⠡⡑⢕⢕⢕⢕⢕⢕⢑⠔⡑⡅⢃⠐⡀⠂⢀⢐⠐⠄⠅⠡..
+        ⠀⠌⠐⡀⠌⠠⠈⠠⢀⠁⠄⠈⡀⠄⠁⠄⠂⠢⠡⠁⠂⠂⠅⡂⠪⡨⠢⡡⡑⠌⡂⠕⡨⢂⠅⡣⠨⡂⢅⠢⡡⡑⡐⡠⢀⠄⢁⠨⢈⢎⢪⢪⢪⠢⡑⡐⡑⠨⠀⠂⠐⢀⠐⡀⠂⠌⠄⠅⡁..
+        ⠀⠂⢁⠠⠐⢀⠡⠐⠀⠄⠂⠁⡀⠄⠂⠀⠂⢀⢰⢸⠐⡀⠀⠈⠐⢌⠪⡐⡐⠅⡊⠔⡨⢐⠨⢐⠡⡈⠢⢑⢐⠔⡡⢊⠔⡨⠠⡐⠠⡱⡱⡱⡡⡑⠌⠀⡀⠐⠀⢀⠂⡐⢀⠂⠡⠈⠄⠡⠐...
+        ⠀⡁⠄⠐⠀⠂⡀⠂⢁⠀⠂⠁⢀⠠⠀⠁⠐⢀⡏⡎⠆⠀⠠⡢⠈⠰⡑⡐⠌⠌⠔⡁⠂⠂⠈⠀⠀⠀⠑⠐⠄⡑⠌⡂⢕⠨⠨⡐⠡⡪⡪⡪⠢⡑⠠⡂⡪⠂⢈⠀⠄⠐⠠⠈⠄⠡⢁⠡⠈ ..
+        ⠀⠠⠐⠈⡀⢁⠠⠐⠀⠀⠂⠁⠀⢀⠠⠈⢀⠔⠹⡌⡐⠄⠠⠈⠀⡸⢐⠌⢌⠪⢐⢀⢪⢸⡨⠈⡐⠀⠄⢀⠀⠈⠌⡐⡡⠊⠌⢌⠜⡜⡜⡈⡐⠄⠅⠂⠄⠁⠀⠄⢈⠠⠁⠨⠀⠅⡀⢂⠁⡁.
+        ⠀⠂⠐⠀⠄⠀⠄⠠⠈⠀⠐⠀⠁⠀⠀⠀⢢⢑⢐⠨⢐⠀⠅⢂⠰⡘⢄⠕⡠⢑⠠⢐⢕⢕⠄⠁⠀⡌⠆⠀⡐⠠⠀⢂⠢⡡⢡⢡⢱⠱⢐⠐⠨⠈⠄⠁⠀⠀⢁⠠⠀⠄⠈⠄⠈⠄⠐⡀⠂⠄..
+        ⠀⢈⠀⠂⠐⠀⠐⢀⠠⠈⠀⠁⠀⠀⠀⠀⢱⠨⡂⠌⠄⢌⢐⢔⠱⡡⢑⢐⠌⠔⡈⠐⡕⡕⡀⢂⢀⢀⠀⠄⡸⡨⢀⢪⢸⢸⢸⢸⡸⠨⡐⠨⠈⠀⠀⠀⠀⠀⠀⠀⠠⠀⡁⠄⠁⠄⠁⠄⠂  ..
+        ⠀⠀⠄⠂⢀⠡⠨⠀⠄⢀⠀⠀⠀⡀⠀⠄⡐⠕⢌⢊⠪⡪⡘⡌⡪⢐⢁⠢⡈⡂⡂⠡⢀⠑⡑⠢⠐⡀⠅⢂⠅⢔⢸⢸⢸⢪⢎⢇⠇⠁⠀⢀⠀⠂⠁⠀⢀⠀⠀⠀⠀⠀⠀⠐⠀⠂⢁⠐⠈⡀..
+        ⠀⠠⠐⠀⠀⠀⠀⠈⠈⠄⡈⢀⠡⠐⡈⠠⠀⡣⢑⠌⡜⢔⠅⢕⢐⢁⢂⠅⡢⠢⡈⡂⡂⡁⡂⠌⡐⡐⠨⢐⢌⢪⢪⢪⢪⢣⢳⠑⠁⢀⠈⠀⠀⡀⠠⠀⠀⡀⠀⠂⠀⠀⠀⠀⠀⠁⠠⠐⠀⠠..
+        ⠀⠀⠀⠀⠀⠀⠀⡀⠄⠀⠀⠐⠀⠂⠀⠁⠐⠨⡢⢱⢸⠨⡊⢔⢐⠔⡠⢑⠄⢕⠐⢔⠰⡐⡐⢅⠢⡨⠨⡂⢎⠢⠣⡱⠱⡑⡁⠄⠠⢀⠠⠈⠀⢀⠀⠠⠀⠀⡀⠄⠀⠈⠀⢀⠀⠀⠀⠈⠀⠂...
+        ⠀⠀⠀⠁⠀⠁⠀⠀⢀⠀⠄⠂⠈⠄⡈⠄⢂⢕⢜⢌⢆⢃⠪⡢⡑⡌⡢⡑⢌⢂⢅⢑⠌⡂⠪⠠⡑⠨⡈⠢⡁⡪⠨⢌⠪⡂⠐⠀⡌⠠⠠⢀⠈⠀⡀⠄⠀⠅⠀⠀⢀⠈⠀⠀⠀⢀⠀⠀⠀⠀...
+        ⠀⠀⠀⠄⠀⠄⠂⠈⠀⠀⢀⠀⠐⡀⢂⠐⡌⡆⡣⡊⡢⡱⡱⡱⡸⡸⡨⡊⢆⢒⢔⢐⠡⠨⡨⢂⠊⢔⠨⢂⠪⡐⢍⢜⠌⢢⠅⠢⠐⡈⡐⡀⢂⠁⡀⠄⠁⡉⠀⠈⠀⠀⠀⠂⠈⠀⠀⠀⠠⠀..
+        ⠀⠀⠀⡀⠀⡀⠀⠠⠐⠈⠀⠀⡀⠂⢐⢰⠱⡸⡨⡪⡪⡪⣎⢞⡜⡎⡎⡎⡎⡪⡂⠢⠡⢑⢐⠐⢅⢂⠪⡐⡑⡜⡸⠀⠀⠂⠅⠡⢁⠂⠄⢂⠐⠠⢀⠀⢂⠁⡀⠁⢀⠈⠀⢀⠠⠀⠀⠐⠀⠀..
+        ⠀⠀⠀⡀⠀⡀⠀⠂⠀⠄⠂⠁⠀⢨⢐⢕⢕⢕⢕⡕⣕⢧⢳⢳⢹⢸⢸⠸⡨⢂⠊⠌⢌⢐⠐⢅⠢⠢⡑⢌⢪⠸⠀⠀⠀⠂⠁⠀⠂⡈⠈⠄⠨⠐⠀⠌⡀⠂⠄⢂⠀⡀⠄⠀⠀⠀⠐⠀⠀⠠...
+        ⠀⠀⢀⠀⢀⠀⠄⠂⠁⠀⠄⠂⠁⠜⢌⢎⢎⢎⢇⡏⡮⡎⡗⡝⢜⢌⢢⢑⢌⢢⠡⡑⡐⠄⠅⢕⠨⡘⡌⡎⡎⠅⠀⠀⠀⠀⠀⠀⠀⠀⠁⡈⠠⠈⠀⠂⡀⠡⠈⠄⢐⠀⠄⠐⠈⠀⠀⠠⠀⠀...
+        ⠀⠀⠀⠀⡀⠀⡀⠄⠂⠁⡀⠐⠀⠈⡢⢂⠕⡱⡑⢕⠕⢕⠱⡘⡜⡜⡜⣜⢼⢸⢸⠰⡨⠨⠨⡂⢕⢅⢇⢎⠀⠀⠀⢀⠀⠁⠀⠀⠈⠀⠀⠀⠀⠀⠈⠀⡀⠀⠂⠁⠄⠐⢈⠠⠀⠁⠂⠀⠀⠐....
+        ⠀⠀⠀⠁⠀⢀⠀⠠⠐⠀⡀⠂⠀⠁⠀⠂⠌⢐⠌⡂⡑⡀⡃⠕⡑⠕⡍⡪⠪⠪⡣⡓⡌⡊⠔⢌⢆⢣⠱⠁⠀⠀⠄⠀⠀⠀⠄⠀⢀⠀⠀⡀⠠⠀⠀⠀⠀⠂⠈⠀⢀⠁⠀⠄⠂⢀⠈⠀⠁⡀....
+        ⠀⠀⠐⠀⠁⠀⠠⠐⠀⠄⠀⠂⠀⠁⡀⠂⠠⢐⠡⢂⠀⠂⠄⠅⡊⠜⠌⢎⢎⢖⢌⠪⠪⡐⢡⢑⠜⠌⠂⠀⠂⠁⠀⢀⠐⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠐⠀⠀⠀⠂⠀⠂⠀⠀⠀⠀⠀⠀....
+        ⠀⠀⠀⠀⠐⠈⡀⠀⠂⠀⠁⠀⠂⢀⠀⡀⠂⡐⠅⢂⠀⠂⠠⢁⠂⢅⢑⢐⠔⡐⢅⠣⡑⠨⡐⢅⠅⠡⠁⠌⠀⠂⠈⠀⠀⠀⠀⠀⠐⠀⠀⠀⠀⠀⢀⠀⠀⡀⠄⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀.....
+        """
         for i in range(size):
             for j in range(size):
                 number = arr[i][j]
-                if number in colors:
-                    color = colors[number]
-                    idraw.rectangle(
-                        (20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80),
-                        fill=color,
-                    )
-                    if number < 128:
-                        idraw.text(
-                            (40 + (j * 100), (27 + i * 100)),
-                            str(number),
-                            font=font,
-                            fill="grey",
-                        )
-                    else:
-                        idraw.text(
-                            (23 + (j * 100), (35 + i * 100)),
-                            str(number),
-                            font=ImageFont.truetype("arial.ttf", size=25),
-                            fill="white",
-                        )
-        filename = f"{self.temp_path}/{''.join(random.choice(string.ascii_lowercase) for _ in range(20))}.png"
+                if arr[i][j] == 2:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill= "#FAEBA7")
+                    idraw.text((40 + (j * 100), (27 + i * 100)), "2", font=font, fill='grey')
+                elif arr[i][j] == 4:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='#FFE4C4')
+                    idraw.text((40 + (j * 100), (27 + i * 100)), "4", font=font, fill='grey')
+                elif arr[i][j] == 8:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='orange')
+                    idraw.text((40 + (j * 100), (27 + i * 100)), str(number), font=font, fill='white')
+                elif arr[i][j] == 16:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='orange')
+                    idraw.text((27 + (j * 100), (27 + i * 100)), str(number), font=font, fill='white')
+                elif arr[i][j] == 32:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='orange')
+                    idraw.text((27 + (j * 100), (27 + i * 100)), str(number), font=font, fill='white')
+                elif arr[i][j] == 64:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='RED')
+                    idraw.text((27 + (j * 100), (27 + i * 100)), str(number), font=font, fill='white')
+                elif arr[i][j] == 128:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
+                    idraw.text((20 + (j * 100), (30 + i * 100)), str(number), font=fontlittle, fill='white')
+                elif arr[i][j] == 256:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
+                    idraw.text((22 + (j * 100), (30 + i * 100)), str(number), font=fontlittle, fill='white')
+                elif arr[i][j] == 512:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
+                    idraw.text((22 + (j * 100), (30 + i * 100)), str(number), font=fontlittle, fill='white')
+                elif arr[i][j] == 1024:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
+                    idraw.text((23 + (j * 100), (35 + i * 100)), str(number), font=ImageFont.truetype("arial.ttf", size=25), fill='white')
+                elif arr[i][j] == 2048:
+                    idraw.rectangle((20 + j * 100, 20 + i * 100, j * 100 + 80, i * 100 + 80), fill='YELLOW')
+                    idraw.text((23 + (j * 100), (35 + i * 100)), str(number), font=ImageFont.truetype("arial.ttf", size=25), fill='white')
+        filename = os.path.join(f"{self.temp_path}", f"{''.join(random.choice(string.ascii_lowercase) for _ in range(20))}.png")
         img.save(filename)
         self.temp_files.append(filename)
         return nextcord.File(filename)
