@@ -91,6 +91,12 @@ class GameCirulliView(nextcord.ui.View):
         self.temp_path = os.path.join(file_dir, "temp")
         self.temp_files = []
         self.size = size
+        self.buttons = [
+            self.move_up_button,
+            self.move_left_button,
+            self.move_down_button,
+            self.move_right_button
+        ]
         self.data: list[list[int]] = [[0 for x in range(size)] for y in range(size)]
         number = randint(1, 100)
         position1 = randint(1, size ** 2)
@@ -334,6 +340,9 @@ class GameCirulliView(nextcord.ui.View):
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
+            for child in self.buttons:
+                child.disabled = True
+            await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
 
     @nextcord.ui.button(
@@ -385,6 +394,9 @@ class GameCirulliView(nextcord.ui.View):
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
+            for child in self.buttons:
+                child.disabled = True
+            await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
 
     @nextcord.ui.button(label="⬇", style=nextcord.ButtonStyle.green, row=2)
@@ -423,6 +435,9 @@ class GameCirulliView(nextcord.ui.View):
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
+            for child in self.buttons:
+                child.disabled = True
+            await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
 
     @nextcord.ui.button(label="➡", style=nextcord.ButtonStyle.green, row=2)
@@ -461,4 +476,7 @@ class GameCirulliView(nextcord.ui.View):
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
+            for child in self.buttons:
+                child.disabled = True
+            await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")

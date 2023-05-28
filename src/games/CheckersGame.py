@@ -1,1 +1,0 @@
-TempVar = None
