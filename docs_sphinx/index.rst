@@ -11,7 +11,10 @@ Welcome to GaemBot's documentation!
    :caption: Contents:
 
    install
-   
+   main
+   cogs
+   games
+   configuration
    support
    test
 

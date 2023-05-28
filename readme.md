@@ -38,7 +38,7 @@ Gaembot - это бот для Discord, разработанный в рамка
 - aeval
 - pillow
 - sphinx
--requests
+- requests
 
 ## Ресурсы
 

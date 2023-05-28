@@ -1,6 +1,19 @@
+import asyncio
+from typing import List, Optional
+
 import nextcord
 
-from typing import List
+
+class TicTacToeStartView(nextcord.ui.View):
+    def __init__(self, *, timeout: float | None = 180, auto_defer: bool = True) -> None:
+        super().__init__(timeout=timeout, auto_defer=auto_defer)
+        self.category_id: int = 1093504369648996473
+    
+    @nextcord.ui.button(label="Начать игру!", style=nextcord.ButtonStyle.green)
+    async def start(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        button.disabled = True
+        await interaction.response.send_message(view=TicTacToe())
+        await interaction.message.edit(view=self)
 
 
 class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
@@ -57,8 +70,14 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
                 child.disabled = True
 
             view.stop()
+            await interaction.response.edit_message(content=content, view=view)
 
-        await interaction.response.edit_message(content=content, view=view)
+            await interaction.channel.send("Игра окончена!\nКанал удалится через 10 секунд")
+            await asyncio.sleep(10)
+            await interaction.channel.delete()
+            # TODO: Сюда впихнуть код по удалению странички
+        else:
+            await interaction.response.edit_message(content=content, view=view)
 
 
 class TicTacToe(nextcord.ui.View):
