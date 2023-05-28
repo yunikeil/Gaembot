@@ -58,7 +58,20 @@ class GameCirulliView(nextcord.ui.View):
         self.temp_files = []
         self.size = size
         self.data: list[list[int]] = [[0 for x in range(size)] for y in range(size)]
-        self.generate_points()
+        number = randint(1, 100)
+        position1 = randint(1, size ** 2)
+        position2 = randint(1, size ** 2)
+        while position1 == position2:
+            position2 = randint(1, size ** 2)
+        if number < 79:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 2
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 2
+        elif number == 80:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 4
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 4
+        else:
+            self.data[(position1 - 1) // size][position1 % 4 - 1] = 2
+            self.data[(position2 - 1) // size][position2 % 4 - 1] = 4
 
     def __del__(self):
         """
@@ -229,18 +242,26 @@ class GameCirulliView(nextcord.ui.View):
         :type interaction: nextcord.Interaction
         """
         done = False
-        for i in range(self.size):
-            for j in range(1, self.size):
-                if j != 0:
-                    if self.data[j - 1][i] == 0:
+        i = 0
+        while i < self.size:
+            j = 1
+            afterUnion = False
+            while j < self.size:
+                if j != 0 and self.data[j][i] != 0:
+                    if self.data[j-1][i] == 0:
                         done = True
-                        self.data[j - 1][i] = self.data[j][i]
+                        self.data[j-1][i] = self.data[j][i]
                         self.data[j][i] = 0
                         j -= 2
-                    elif self.data[j - 1][i] == self.data[j][i]:
+                    elif self.data[j-1][i] == self.data[j][i] and not afterUnion:
                         done = True
-                        self.data[j - 1][i] *= 2
+                        self.data[j-1][i] *= 2
                         self.data[j][i] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j += 1
+            i += 1
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
@@ -272,18 +293,26 @@ class GameCirulliView(nextcord.ui.View):
         :type interaction: nextcord.Interaction
         """
         done = False
-        for i in range(self.size):
-            for j in range(1, self.size):
-                if j != 0:
-                    if self.data[i][j - 1] == 0:
+        i = 0
+        while i < self.size:
+            j = 1
+            afterUnion = False
+            while j < self.size:
+                if j != 0 and self.data[i][j] != 0:
+                    if self.data[i][j-1] == 0:
                         done = True
-                        self.data[i][j - 1] = self.data[i][j]
+                        self.data[i][j-1] = self.data[i][j]
                         self.data[i][j] = 0
                         j -= 2
-                    elif self.data[i][j - 1] == self.data[i][j]:
+                    elif self.data[i][j-1] == self.data[i][j] and not afterUnion:
                         done = True
-                        self.data[i][j - 1] *= 2
+                        self.data[i][j-1] *= 2
                         self.data[i][j] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j += 1
+            i += 1
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
@@ -302,18 +331,26 @@ class GameCirulliView(nextcord.ui.View):
         :type interaction: nextcord.Interaction
         """
         done = False
-        for i in range(self.size):
-            for j in range(self.size - 2, -1, -1):
-                if j != self.size - 1:
-                    if self.data[j + 1][i] == 0:
+        i = 0
+        while i < self.size:
+            j = self.size - 2
+            afterUnion = False
+            while j > -1:
+                if j != self.size - 1 and self.data[j][i] != 0:
+                    if self.data[j+1][i] == 0:
                         done = True
-                        self.data[j + 1][i] = self.data[j][i]
+                        self.data[j+1][i] = self.data[j][i]
                         self.data[j][i] = 0
                         j += 2
-                    elif self.data[j + 1][i] == self.data[j][i]:
+                    elif self.data[j+1][i] == self.data[j][i] and not afterUnion:
                         done = True
-                        self.data[j + 1][i] *= 2
+                        self.data[j+1][i] *= 2
                         self.data[j][i] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j -= 1
+            i += 1
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
@@ -332,18 +369,26 @@ class GameCirulliView(nextcord.ui.View):
         :type interaction: nextcord.Interaction
         """
         done = False
-        for i in range(self.size):
-            for j in range(self.size - 2, -1, -1):
-                if j != self.size - 1:
-                    if self.data[i][j + 1] == 0:
+        i = 0
+        while i < self.size:
+            j = self.size-2
+            afterUnion = False
+            while j > -1:
+                if j != self.size - 1  and self.data[i][j] != 0:
+                    if self.data[i][j+1] == 0:
                         done = True
-                        self.data[i][j + 1] = self.data[i][j]
+                        self.data[i][j+1] = self.data[i][j]
                         self.data[i][j] = 0
                         j += 2
-                    elif self.data[i][j + 1] == self.data[i][j]:
+                    elif self.data[i][j+1] == self.data[i][j] and not afterUnion:
                         done = True
-                        self.data[i][j + 1] *= 2
+                        self.data[i][j+1] *= 2
                         self.data[i][j] = 0
+                        afterUnion = True
+                    else:
+                        afterUnion = False
+                j -= 1
+            i += 1
         if not done or self.generate_points():
             await interaction.message.edit(file=self.drow_matrix())
         else:
