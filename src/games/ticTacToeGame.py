@@ -79,7 +79,6 @@ class TicTacToeButton(nextcord.ui.Button["TicTacToe"]):
             )
             await asyncio.sleep(10)
             await interaction.channel.delete()
-            # TODO: Сюда впихнуть код по удалению странички
         else:
             await interaction.response.edit_message(content=content, view=view)
 
