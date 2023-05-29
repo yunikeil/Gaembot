@@ -148,8 +148,8 @@ class GameCirulliView(nextcord.ui.View):
         # Рисуем квадраты для чисел
         font = ImageFont.truetype("arial.ttf", size=40)
         fontlittle = ImageFont.truetype("arial.ttf", size=35)
-        # font = ImageFont.load_default()
-        # fontlittle = ImageFont.load_default()
+        #font = ImageFont.load_default(size=40)
+        #ontlittle = ImageFont.load_default(size=35)
         """
         ⠀⠀⠀⠀⡀⠄⠠⠀⠠⠀⢀⠪No switches?⡐⡅⡇⢇⠕⡌⡢⢑⠌⡢⢑⠌⡆⢕⢌⢢⠱⡨⢢⢑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⢂⠪⡐⢌⢂⠪⡐⢅⢪⠨⡢⡃⡪.
         ⠀⠐⠈⠀⠀⡀⠐⢈⠠⠐⡀⢇⢕⠕⢅⠣⡑⠔⢌⠢⠡⡊⢔⢑⠌⡆⢕⢔⠱⡨⢢⠱⡨⢪⢘⢌⢪⠸⡨⡪⡘⡌⡪⡘⢔⢑⢌⠢⡡⡑⢌⠢⡡⡑⢌⢢⢑⠕⡌⢆⠕⡅⢕⠌⡆⢕⠅⡂⡂..
