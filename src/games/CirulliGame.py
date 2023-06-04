@@ -27,6 +27,8 @@ class Dropdown(nextcord.ui.Select):
         )
 
     async def callback(self, interaction: nextcord.Interaction):
+        # TODO: Проверить, если истина - убрать лишнее
+        #print(self.view==self.ViewParrent) 
         self.ViewParrent.remove_item(self)
         self.ViewParrent.add_item(self.ViewParrent.button_saved)
         await interaction.message.edit(view=self.ViewParrent)
@@ -148,8 +150,8 @@ class GameCirulliView(nextcord.ui.View):
         # Рисуем квадраты для чисел
         font = ImageFont.truetype("arial.ttf", size=40)
         fontlittle = ImageFont.truetype("arial.ttf", size=35)
-        # font = ImageFont.load_default()
-        # fontlittle = ImageFont.load_default()
+        #font = ImageFont.load_default(size=40)
+        #ontlittle = ImageFont.load_default(size=35)
         """
         ⠀⠀⠀⠀⡀⠄⠠⠀⠠⠀⢀⠪No switches?⡐⡅⡇⢇⠕⡌⡢⢑⠌⡢⢑⠌⡆⢕⢌⢢⠱⡨⢢⢑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⠢⡑⢌⢂⠪⡐⢌⢂⠪⡐⢅⢪⠨⡢⡃⡪.
         ⠀⠐⠈⠀⠀⡀⠐⢈⠠⠐⡀⢇⢕⠕⢅⠣⡑⠔⢌⠢⠡⡊⢔⢑⠌⡆⢕⢔⠱⡨⢢⠱⡨⢪⢘⢌⢪⠸⡨⡪⡘⡌⡪⡘⢔⢑⢌⠢⡡⡑⢌⠢⡡⡑⢌⢢⢑⠕⡌⢆⠕⡅⢕⠌⡆⢕⠅⡂⡂..
@@ -421,6 +423,8 @@ class GameCirulliView(nextcord.ui.View):
                 child.disabled = True
             await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
+            await asyncio.sleep(60*5)
+            await interaction.channel.delete()
 
     @nextcord.ui.button(
         style=nextcord.ButtonStyle.secondary, label="\u200b" * 8, row=1, disabled=True
@@ -475,6 +479,8 @@ class GameCirulliView(nextcord.ui.View):
                 child.disabled = True
             await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
+            await asyncio.sleep(60*5)
+            await interaction.channel.delete()
 
     @nextcord.ui.button(label="⬇", style=nextcord.ButtonStyle.green, row=2)
     async def move_down_button(
@@ -516,7 +522,9 @@ class GameCirulliView(nextcord.ui.View):
                 child.disabled = True
             await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
-
+            await asyncio.sleep(60*5)
+            await interaction.channel.delete()
+            
     @nextcord.ui.button(label="➡", style=nextcord.ButtonStyle.green, row=2)
     async def move_right_button(
         self, button: nextcord.ui.Button, interaction: nextcord.Interaction
@@ -557,3 +565,6 @@ class GameCirulliView(nextcord.ui.View):
                 child.disabled = True
             await interaction.message.edit(file=self.drow_matrix(), view=self)
             await interaction.response.send_message("игра окончена")
+            await asyncio.sleep(60*5)
+            await interaction.channel.delete()
+            
