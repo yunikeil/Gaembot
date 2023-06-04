@@ -27,6 +27,8 @@ class Dropdown(nextcord.ui.Select):
         )
 
     async def callback(self, interaction: nextcord.Interaction):
+        # TODO: Проверить, если истина - убрать лишнее
+        #print(self.view==self.ViewParrent) 
         self.ViewParrent.remove_item(self)
         self.ViewParrent.add_item(self.ViewParrent.button_saved)
         await interaction.message.edit(view=self.ViewParrent)
