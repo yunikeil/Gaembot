@@ -102,4 +102,4 @@ TODO
 * <https://discord.com/developers/applications>
 * <https://discord.com/api/oauth2/>
 
-[^1]: "Подробнее о структуре папок":http://docs.yunikeil.ru/
+[^1]: Подробнее о структуре папок можно почитать в [документации](http://docs.yunikeil.ru/)
