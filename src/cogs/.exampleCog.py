@@ -1,15 +1,19 @@
 import nextcord
-from nextcord.ext.commands import Bot, Cog
+from nextcord.ext.commands import Bot, Cog, command
 
 
-class Ping(Cog):
+class ExampleCog(Cog):
     def __init__(self, bot: Bot) -> None:
+        bot.sync_all_application_commands()
         self.bot = bot
 
     def __del__(self):
         ...
 
-    @nextcord.ext.commands.command()
+    async def on_init(self):
+        pass
+
+    @command()
     async def ping(self, ctx):
         await ctx.send(f"Pong! {self.bot.latency * 1000:.2f}ms")
 
@@ -19,5 +23,5 @@ class Ping(Cog):
 
 
 def setup(bot: Bot) -> None:
-    print("ping.py loaded")
-    bot.add_cog(Ping(bot))
+    print(".exampleCog.py loaded")
+    bot.add_cog(ExampleCog(bot))
