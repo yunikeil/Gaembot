@@ -33,7 +33,17 @@ then
 fi
 
 
+if [ -d "Venv" ]; then
+    rm -r "Venv"
+fi
 
+
+python3 -m venv Venv
+source Venv/bin/activate
+
+git clone https://github.com/nextcord/nextcord/
+cd nextcord
+python3 -m pip install -U .[voice]
 
 
 #if ! command -v unzip &> /dev/null
