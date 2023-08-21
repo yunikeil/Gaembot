@@ -6,46 +6,42 @@ import nextcord
 from nextcord.ext import commands
 import aeval
 
-try:
-    from src.cogs.GamesCog import GamesSelectView
-except ImportError as ex:
-    GamesSelectView = False
-
+from src.cogs.GamesCog import GamesSelectView
 import configuration
 
 
 class Bot(commands.Bot, ABC):
     def __init__(self, **options):
-        super().__init__(command_prefix='>',
-                         help_command=None,
-                         intents=nextcord.Intents.all(),
-                         **options)
+        super().__init__(
+            command_prefix=">",
+            help_command=None,
+            intents=nextcord.Intents.all(),
+            **options,
+        )
 
         self.DATA: dict = {
-            'bot-started': False,
+            "bot-started": False,
         }
         self.OWNERS: list[int] = []
         self.EVAL_OWNER: list[int] = []
         self.config: object = configuration
 
     async def on_ready(self):
-        if not self.DATA['bot-started']:
+        if not self.DATA["bot-started"]:
             application_info = await self.application_info()
             self.OWNERS.append(application_info.owner.id)
             self.EVAL_OWNER.append(application_info.owner.id)
-            self.DATA['bot-started'] = True
+            self.DATA["bot-started"] = True
         print(f"Logged in as {self.user} (ID: {self.user.id})\n------")
         cogs_add_on_ready: list[str] = ["GamesCog", "RolesCog"]
         if cogs_add_on_ready:
             [bot.load_extension(f"cogs.{cog}") for cog in cogs_add_on_ready]
-        
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, nextcord.ext.commands.CommandNotFound):
             return
         raise error
 
-    
     ...
 
 
@@ -101,12 +97,14 @@ async def eval(ctx, *, content):
         "ctx": ctx,
         "asyncio": asyncio,
     }
-    
+
     try:
         await aeval.aeval(content, standart_args, {})
     except Exception as ex:
         result = "".join(format_exception(ex, ex, ex.__traceback__))
-        await ctx.channel.send(f"Exception:\n```bash\n{result.replace('```', '`')}\n```")
+        await ctx.channel.send(
+            f"Exception:\n```bash\n{result.replace('```', '`')}\n```"
+        )
 
 
 if __name__ == "__main__":

@@ -6,6 +6,4 @@ disown %
 jobs -l 
 
 
-# ps aux
 
-#  now 504942
