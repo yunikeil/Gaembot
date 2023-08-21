@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+sudo apt update
 if ! command -v python3 &> /dev/null
 then
     echo "Python 3 is not installed. Do you want to install it now? (y/n)"
@@ -8,8 +9,7 @@ then
     if [ "$choice" = "y" ]
     then
         echo "Installing Python 3 and pip using apt..."
-        sudo apt-get update
-        sudo apt-get install python3 python3-pip
+        sudo apt install python3 python3-pip
     else
         echo "Aborting..."
         exit 1
@@ -24,8 +24,22 @@ then
     if [ "$choice" = "y" ]
     then
         echo "Installing pip using apt..."
-        sudo apt-get update
-        sudo apt-get install python3-pip
+        sudo apt install python3-pip
+    else
+        echo "Aborting..."
+        exit 1
+    fi
+fi
+
+
+if ! command -v rename &> /dev/null
+then
+    echo "rename is not installed. Do you want to install it now? (y/n)"
+    read choice
+    if [ "$choice" = "y" ]
+    then
+        echo "Installing rename using apt..."
+        sudo apt install rename
     else
         echo "Aborting..."
         exit 1
