@@ -12,20 +12,25 @@ Discord - это платформа для общения и координац�
 
 Проект Gaembot предназначен для лёгкого внедрения настольных игр в площадку Discord, что делает его интересным примером приложения, использующего навыки программирования для создания интерактивных игровых сред.
 
+## Local hosting (General Guide)
 
-## Быстрый старт
+Gaembot can be hosted on any modern hardware, including your PC. For stability and reliability, we suggest purchasing a cloud server (VPS) for under $5/mo. If you need recommendations on choosing a VPS, join our [Discord server](https://discord.gg/HraAugHcCN), and we'll send you a list of non-affiliated hosting providers.
 
-* Прямая установка
-   1. Клонируете репозиторий `git clone https://github.com/yunikeil/Gaembot`
-   2. Запустите `python ./Gaembot/setup.py -i normal`
-   3. Следуйте инструкциям установщика
-   4. Готово!
-* Старт with Docker
-    1. Клонируете репозиторий `git clone https://github.com/yunikeil/Gaembot`
-    2. Запустите `python ./Gaembot/setup.py -i docker`
-    3. Запустите сборку `docker build -t Gaembot ./Gaembot`
-    4. Запустите образ `docker run Gaembot`
-    5. Готово!
+This guide assumes you've downloaded [`Python 3.8 or higher`](https://www.python.org/downloads/) and added python and pip to PATH.
+
+1. Clone this repo
+
+```shell
+git clone https://github.com/yunikeil/Gaembot.git
+cd Gaembot
+```
+
+...
+
+
+## Local Hosting (Docker)
+
+...
 
 ## Общая структура проекта [^1]
 
@@ -46,10 +51,6 @@ Discord - это платформа для общения и координац�
 * games - папка, содержащая в себе основной код игр
 * configuration.py - файл конфигурации, генерируется в setup.py
 * main.py -  главный файл, из него загружаются и выгружаются модули, производится отладка
-
-### Файл - установщик
-
-...
 
 ## Стандартные игры
 
@@ -82,12 +83,11 @@ Discord - это платформа для общения и координац�
 
 ### Основная структура файла игры
 
-TODO
-123
+...
 
 ### Регистрация игры в конфигурации бота
 
-TODO
+...
 
 ### Обновление без полной остановки бота
 
