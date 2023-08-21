@@ -174,3 +174,6 @@ temp-output.txt
 
 http_output.txt
 http_proc_num.txt
+
+# Library
+nextcord
