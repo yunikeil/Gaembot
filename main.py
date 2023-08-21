@@ -7,7 +7,7 @@ from nextcord.ext import commands
 import aeval
 
 try:
-    from cogs.GamesCog import GamesSelectView
+    from src.cogs.GamesCog import GamesSelectView
 except ImportError as ex:
     GamesSelectView = False
 
