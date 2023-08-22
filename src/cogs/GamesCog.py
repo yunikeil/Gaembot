@@ -13,6 +13,7 @@ class GamesSelect(nextcord.ui.Select):
     """
     Класс представляющий из себя item GamesSelectView.
     Служит выпадающим меню с выбором игр.
+    (Для внутреннего использования в коде)
     """
 
     def __init__(self, bot: Bot):
@@ -60,15 +61,15 @@ class GamesSelect(nextcord.ui.Select):
                     ephemeral=True
                 )
 
-
 class GamesSelectView(nextcord.ui.View):
     """
     Класс представляющий из себя обёртку для GamesSelect.
     Служит выпадающим меню с выбором игр.
+    (Для внутреннего использования в коде)
     """
 
     def __init__(self, bot):
-        super().__init__()
+        super().__init__(prevent_update=False)
         self.timeout = None
         self.add_item(GamesSelect(bot=bot))
 
@@ -77,6 +78,7 @@ class GamesCog(Cog):
     """
     Класс-команда, предоставляющий возможность выбора игр из выпадающего меню.
     Создаёт сообщение, поддерживает его рабочее состояние а также обрабатывает входящие запросы.
+    (Для внутреннего использования в коде)
     """
 
     def __init__(self, bot: Bot) -> None:
@@ -86,27 +88,30 @@ class GamesCog(Cog):
         pass
 
     def cog_unload(self):
-        pass
+        self.bot.remove_view(GamesSelectView())
 
     @commands.command()
     async def games_select_message(self, ctx: Context):
         """
-        Отправляет сообщение с выпадающим меню выбора игры.
+        Команда, которая отправляет сообщение с выпадающим меню выбора игры.
 
         :param ctx: объект класса Context
         :type ctx: nextcord.ext.commands.Context
         """
+
         await ctx.message.delete()
         await ctx.channel.send("Выберите игру:", view=GamesSelectView(bot=self.bot))
         ...
 
 
 def setup(bot: Bot) -> None:
-    """
-    Функция для добавления команды GamesCog в бота.
+    """Функция для добавления команды GamesCog в бота.
+    (используется внутри библиотеки)
 
     :param bot: объект класса Bot
     :type bot: nextcord.ext.commands.Bot
     """
+
     print("GamesCog.py loaded")
+    bot.add_view(GamesSelectView())
     bot.add_cog(GamesCog(bot))
