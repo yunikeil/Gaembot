@@ -54,10 +54,13 @@ fi
 
 python3 -m venv Venv
 source Venv/bin/activate
+pip install -r requirements.txt
 
 git clone https://github.com/nextcord/nextcord/
 cd nextcord
 python3 -m pip install -U .[voice]
+
+# TODO Автоматическое создание config-файла с ручным вводом переменных
 
 
 #if ! command -v unzip &> /dev/null
