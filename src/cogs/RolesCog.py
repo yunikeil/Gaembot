@@ -72,5 +72,6 @@ class RolesCog(Cog):
 
 
 def setup(bot: Bot) -> None:
+    raise "Not current, archived file, role selection moved to discord functionality"
     print("RolesCog.py loaded")
     bot.add_cog(RolesCog(bot))
